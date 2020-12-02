@@ -5,21 +5,35 @@
     <Authors>Muhammad Umair Tahir</Authors>
     <Company>Tech-Flurry</Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Copyright>Tech-Flurry</Copyright>
-    <Description>Enables ODate support for a .Net 5 WEBAPI using dapper</Description>
-    <SignAssembly>true</SignAssembly>
+    <Description>Enables OData support for a .Net 5 WEBAPI using dapper</Description>
+    <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>oDataSignatureKey.pfx</AssemblyOriginatorKeyFile>
+    <RepositoryUrl>https://github.com/ut786/Dapper.OData</RepositoryUrl>
+    <PackageLicenseExpression></PackageLicenseExpression>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <Optimize>true</Optimize>
+    <DocumentationFile>..\Dapper.OData.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.78" />
-    <PackageReference Include="Microsoft.AspNetCore.OData" Version="7.5.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.OData" Version="8.0.0-preview2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
