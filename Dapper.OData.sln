@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30711.63
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapper.OData", "Dapper.OData\Dapper.OData.csproj", "{114ED589-8487-4919-B79D-77D15E5C70D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapper.OData.Sample", "Dapper.OData.Sample\Dapper.OData.Sample.csproj", "{0E61CC7F-5735-436B-A436-A0B7A58783EF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{114ED589-8487-4919-B79D-77D15E5C70D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{114ED589-8487-4919-B79D-77D15E5C70D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{114ED589-8487-4919-B79D-77D15E5C70D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{114ED589-8487-4919-B79D-77D15E5C70D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E61CC7F-5735-436B-A436-A0B7A58783EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E61CC7F-5735-436B-A436-A0B7A58783EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E61CC7F-5735-436B-A436-A0B7A58783EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E61CC7F-5735-436B-A436-A0B7A58783EF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {502022CB-8653-42AE-99DB-38706CF163CC}
+	EndGlobalSection
+EndGlobal
