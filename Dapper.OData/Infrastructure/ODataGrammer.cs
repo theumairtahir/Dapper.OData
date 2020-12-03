@@ -2,7 +2,7 @@
 
 namespace Dapper.OData.Infrastructure
 {
-    public class ODataGrammer
+    internal class ODataGrammer
     {
         private readonly Dictionary<string, string> _grammer;
         public ODataGrammer()
