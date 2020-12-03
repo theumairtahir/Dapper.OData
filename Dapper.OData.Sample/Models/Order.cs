@@ -12,5 +12,6 @@ namespace Dapper.OData.Sample.Models
         public DateTime? Shipped_Date { get; set; }
         public int Store_Id { get; set; }
         public int Staff_Id { get; set; }
+        public Customer Customer { get; set; }
     }
 }

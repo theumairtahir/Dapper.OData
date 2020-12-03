@@ -14,7 +14,8 @@ namespace Dapper.OData
                                     .Filter()
                                     .Select()
                                     .Count()
-                                    .OrderBy());
+                                    .OrderBy()
+                                    .Expand());
             services.AddSingleton<IDbConfiguration>(x => new DbConfiguration(conString, connectionTimeout));
             services.AddSingleton<ITryCatch, TryCatch>();
             services.AddTransient<IDbConnection, DbConnection>();

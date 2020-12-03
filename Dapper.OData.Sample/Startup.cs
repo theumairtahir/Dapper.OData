@@ -12,6 +12,7 @@ using Microsoft.Net.Http.Headers;
 using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
 using Microsoft.OpenApi.Models;
+using OData.Swagger.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +40,7 @@ namespace Dapper.OData.Sample
             });
             services.AddRouting();
             services.AddDapperOData(GetEdmModel(), Configuration.GetConnectionString("DefaultConnection"));
-            AddSwaggerOData(ref services);
+            services.AddOdataSwaggerSupport();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,6 +70,7 @@ namespace Dapper.OData.Sample
             ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
             builder.EntitySet<Product>(nameof(Product) + "s").EntityType.HasKey(x => x.Product_Id);
             builder.EntitySet<Order>(nameof(Order) + "s").EntityType.HasKey(x => x.Order_Id);
+            builder.EntitySet<Customer>(nameof(Customer) + "s").EntityType.HasKey(x => x.Customer_Id);
             var edmModel = builder.GetEdmModel();
             return edmModel;
         }
