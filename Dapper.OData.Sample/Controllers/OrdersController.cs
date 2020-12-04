@@ -1,8 +1,9 @@
 ﻿using Dapper.OData.Infrastructure;
 using Dapper.OData.Models;
 using Dapper.OData.Sample.Models;
+using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.OData.Query;
+//using Microsoft.AspNetCore.OData.Query;
 using System.Linq;
 
 namespace Dapper.OData.Sample.Controllers
@@ -16,7 +17,7 @@ namespace Dapper.OData.Sample.Controllers
             _db = db;
         }
         [EnableQuery]
-        public IQueryable<Order> GetOrders(DbParams dbParams)
+        public IQueryable<Order> GetOrders(/*DbParams dbParams*/)
         {
             var query = @"SELECT [order_id]
                               ,o.[customer_id]
@@ -41,7 +42,7 @@ namespace Dapper.OData.Sample.Controllers
             {
                 x.Customer = y;
                 return x;
-            }, "first_name", out _, filter: dbParams.Filter, top: dbParams.Top, skip: dbParams.Skip, take: dbParams.Take, orderBy: dbParams.OrderBy);
+            }, "first_name", out _/*, filter: dbParams.Filter, top: dbParams.Top, skip: dbParams.Skip, take: dbParams.Take, orderBy: dbParams.OrderBy*/);
             return orders;
         }
     }

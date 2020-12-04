@@ -1,16 +1,19 @@
 using Dapper.OData.Sample.Models;
+using Microsoft.AspNet.OData.Builder;
+using Microsoft.AspNet.OData.Extensions;
+using Microsoft.AspNet.OData.Formatter;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.OData.Formatter;
+//using Microsoft.AspNetCore.OData.Formatter;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OData.Edm;
-using Microsoft.OData.ModelBuilder;
+//using Microsoft.OData.ModelBuilder;
 using Microsoft.OpenApi.Models;
 using OData.Swagger.Services;
 using System;
@@ -63,6 +66,14 @@ namespace Dapper.OData.Sample
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.EnableDependencyInjection();
+                endpoints//.AddModel(GetEdmModel())
+                .MapODataRoute("oData", "oData", GetEdmModel())
+                .Filter()
+                                    .Select()
+                                    .Count()
+                                    .OrderBy()
+                                    .Expand();
             });
         }
         private static IEdmModel GetEdmModel()
