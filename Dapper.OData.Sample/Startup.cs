@@ -37,6 +37,7 @@ namespace Dapper.OData.Sample
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Dapper.OData.Sample", Version = "v1" });
+                c.DocInclusionPredicate((name, api) => api.HttpMethod != null);
             });
             services.AddRouting();
             services.AddDapperOData(GetEdmModel(), Configuration.GetConnectionString("DefaultConnection"));
