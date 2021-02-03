@@ -75,30 +75,7 @@ namespace Dapper.OData.Infrastructure.Oracle
             //_logger.LogInformation($"Has Params: {@params is not null}");
             string whereClause = GetWhereClause(filter);
             //_logger.LogInformation($"Where Clause: {whereClause}");
-            string formattedQuery;
-            if (skip is not null)
-            {
-                if (take is not null && orderBy is not null)
-                {
-                    formattedQuery = $@"SELECT * FROM ({query.ToUpper()}) V WHERE 1=1 {whereClause} ORDER BY {orderBy} OFFSET ({skip}) ROWS FETCH NEXT ({take}) ROWS ONLY";
-                }
-                else
-                {
-                    throw new Exception("Every skip must have a take and an order by");
-                }
-            }
-            else if (top is not null)
-            {
-                formattedQuery = $@"SELECT TOP({top}) * FROM ({query.ToUpper()}) V WHERE 1=1 {whereClause}";
-            }
-            else
-            {
-                formattedQuery = $@"SELECT * FROM ({query.ToUpper()}) V WHERE 1=1 {whereClause}";
-            }
-            if (skip is null)
-            {
-                formattedQuery = orderBy is not null ? $"{formattedQuery} ORDER BY {orderBy}" : formattedQuery;
-            }
+            string formattedQuery = GetFormattedQueryForOData(query, skip, take, orderBy, whereClause, top);
             //_logger.LogInformation($"Formatted Query: {formattedQuery}");
             using (System.Data.IDbConnection con = new OracleConnection(_configuration.ConnectionString))
             {
@@ -136,30 +113,7 @@ namespace Dapper.OData.Infrastructure.Oracle
             //_logger.LogInformation($"Has Params: {@params is not null}");
             string whereClause = GetWhereClause(filter);
             //_logger.LogInformation($"Where Clause: {whereClause}");
-            string formattedQuery;
-            if (skip is not null)
-            {
-                if (take is not null && orderBy is not null)
-                {
-                    formattedQuery = $@"SELECT * FROM ({query.ToUpper()}) V WHERE 1=1 {whereClause} ORDER BY {orderBy} OFFSET ({skip}) ROWS FETCH NEXT ({take}) ROWS ONLY";
-                }
-                else
-                {
-                    throw new Exception("Every skip must have a take and an order by");
-                }
-            }
-            else if (top is not null)
-            {
-                formattedQuery = $@"SELECT TOP({top}) * FROM ({query.ToUpper()}) V WHERE 1=1 {whereClause}";
-            }
-            else
-            {
-                formattedQuery = $@"SELECT * FROM ({query.ToUpper()}) V WHERE 1=1 {whereClause}";
-            }
-            if (skip is null)
-            {
-                formattedQuery = orderBy is not null ? $"{formattedQuery} ORDER BY {orderBy}" : formattedQuery;
-            }
+            string formattedQuery = GetFormattedQueryForOData(query, skip, take, orderBy, whereClause, top);
             //_logger.LogInformation($"Formatted Query: {formattedQuery}");
             using (System.Data.IDbConnection con = new OracleConnection(_configuration.ConnectionString))
             {
@@ -198,30 +152,7 @@ namespace Dapper.OData.Infrastructure.Oracle
             //_logger.LogInformation($"Has Params: {@params is not null}");
             string whereClause = GetWhereClause(filter);
             //_logger.LogInformation($"Where Clause: {whereClause}");
-            string formattedQuery;
-            if (skip is not null)
-            {
-                if (take is not null && orderBy is not null)
-                {
-                    formattedQuery = $@"SELECT * FROM ({query.ToUpper()}) V WHERE 1=1 {whereClause} ORDER BY {orderBy} OFFSET ({skip}) ROWS FETCH NEXT ({take}) ROWS ONLY";
-                }
-                else
-                {
-                    throw new Exception("Every skip must have a take and an order by");
-                }
-            }
-            else if (top is not null)
-            {
-                formattedQuery = $@"SELECT TOP({top}) * FROM ({query.ToUpper()}) V WHERE 1=1 {whereClause}";
-            }
-            else
-            {
-                formattedQuery = $@"SELECT * FROM ({query.ToUpper()}) V WHERE 1=1 {whereClause}";
-            }
-            if (skip is null)
-            {
-                formattedQuery = orderBy is not null ? $"{formattedQuery} ORDER BY {orderBy}" : formattedQuery;
-            }
+            string formattedQuery = GetFormattedQueryForOData(query, skip, take, orderBy, whereClause, top);
             //_logger.LogInformation($"Formatted Query: {formattedQuery}");
             using (System.Data.IDbConnection con = new OracleConnection(_configuration.ConnectionString))
             {
@@ -261,30 +192,7 @@ namespace Dapper.OData.Infrastructure.Oracle
             //_logger.LogInformation($"Has Params: {@params is not null}");
             string whereClause = GetWhereClause(filter);
             //_logger.LogInformation($"Where Clause: {whereClause}");
-            string formattedQuery;
-            if (skip is not null)
-            {
-                if (take is not null && orderBy is not null)
-                {
-                    formattedQuery = $@"SELECT * FROM ({query.ToUpper()}) V WHERE 1=1 {whereClause} ORDER BY {orderBy} OFFSET ({skip}) ROWS FETCH NEXT ({take}) ROWS ONLY";
-                }
-                else
-                {
-                    throw new Exception("Every skip must have a take and an order by");
-                }
-            }
-            else if (top is not null)
-            {
-                formattedQuery = $@"SELECT TOP({top}) * FROM ({query.ToUpper()}) V WHERE 1=1 {whereClause}";
-            }
-            else
-            {
-                formattedQuery = $@"SELECT * FROM ({query.ToUpper()}) V WHERE 1=1 {whereClause}";
-            }
-            if (skip is null)
-            {
-                formattedQuery = orderBy is not null ? $"{formattedQuery} ORDER BY {orderBy}" : formattedQuery;
-            }
+            string formattedQuery = GetFormattedQueryForOData(query, skip, take, orderBy, whereClause, top);
             //_logger.LogInformation($"Formatted Query: {formattedQuery}");
             using (System.Data.IDbConnection con = new OracleConnection(_configuration.ConnectionString))
             {
@@ -325,30 +233,7 @@ namespace Dapper.OData.Infrastructure.Oracle
             //_logger.LogInformation($"Has Params: {@params is not null}");
             string whereClause = GetWhereClause(filter);
             //_logger.LogInformation($"Where Clause: {whereClause}");
-            string formattedQuery;
-            if (skip is not null)
-            {
-                if (take is not null && orderBy is not null)
-                {
-                    formattedQuery = $@"SELECT * FROM ({query.ToUpper()}) V WHERE 1=1 {whereClause} ORDER BY {orderBy} OFFSET ({skip}) ROWS FETCH NEXT ({take}) ROWS ONLY";
-                }
-                else
-                {
-                    throw new Exception("Every skip must have a take and an order by");
-                }
-            }
-            else if (top is not null)
-            {
-                formattedQuery = $@"SELECT TOP({top}) * FROM ({query.ToUpper()}) V WHERE 1=1 {whereClause}";
-            }
-            else
-            {
-                formattedQuery = $@"SELECT * FROM ({query.ToUpper()}) V WHERE 1=1 {whereClause}";
-            }
-            if (skip is null)
-            {
-                formattedQuery = orderBy is not null ? $"{formattedQuery} ORDER BY {orderBy}" : formattedQuery;
-            }
+            string formattedQuery = GetFormattedQueryForOData(query, skip, take, orderBy, whereClause, top);
             //_logger.LogInformation($"Formatted Query: {formattedQuery}");
             using (System.Data.IDbConnection con = new OracleConnection(_configuration.ConnectionString))
             {
@@ -390,30 +275,7 @@ namespace Dapper.OData.Infrastructure.Oracle
             //_logger.LogInformation($"Has Params: {@params is not null}");
             string whereClause = GetWhereClause(filter);
             //_logger.LogInformation($"Where Clause: {whereClause}");
-            string formattedQuery;
-            if (skip is not null)
-            {
-                if (take is not null && orderBy is not null)
-                {
-                    formattedQuery = $@"SELECT * FROM ({query.ToUpper()}) V WHERE 1=1 {whereClause} ORDER BY {orderBy} OFFSET ({skip}) ROWS FETCH NEXT ({take}) ROWS ONLY";
-                }
-                else
-                {
-                    throw new Exception("Every skip must have a take and an order by");
-                }
-            }
-            else if (top is not null)
-            {
-                formattedQuery = $@"SELECT TOP({top}) * FROM ({query.ToUpper()}) V WHERE 1=1 {whereClause}";
-            }
-            else
-            {
-                formattedQuery = $@"SELECT * FROM ({query.ToUpper()}) V WHERE 1=1 {whereClause}";
-            }
-            if (skip is null)
-            {
-                formattedQuery = orderBy is not null ? $"{formattedQuery} ORDER BY {orderBy}" : formattedQuery;
-            }
+            string formattedQuery = GetFormattedQueryForOData(query, skip, take, orderBy, whereClause, top);
             //_logger.LogInformation($"Formatted Query: {formattedQuery}");
             using (System.Data.IDbConnection con = new OracleConnection(_configuration.ConnectionString))
             {
@@ -456,30 +318,7 @@ namespace Dapper.OData.Infrastructure.Oracle
             //_logger.LogInformation($"Has Params: {@params is not null}");
             string whereClause = GetWhereClause(filter);
             //_logger.LogInformation($"Where Clause: {whereClause}");
-            string formattedQuery;
-            if (skip is not null)
-            {
-                if (take is not null && orderBy is not null)
-                {
-                    formattedQuery = $@"SELECT * FROM ({query.ToUpper()}) V WHERE 1=1 {whereClause} ORDER BY {orderBy} OFFSET ({skip}) ROWS FETCH NEXT ({take}) ROWS ONLY";
-                }
-                else
-                {
-                    throw new Exception("Every skip must have a take and an order by");
-                }
-            }
-            else if (top is not null)
-            {
-                formattedQuery = $@"SELECT TOP({top}) * FROM ({query.ToUpper()}) V WHERE 1=1 {whereClause}";
-            }
-            else
-            {
-                formattedQuery = $@"SELECT * FROM ({query.ToUpper()}) V WHERE 1=1 {whereClause}";
-            }
-            if (skip is null)
-            {
-                formattedQuery = orderBy is not null ? $"{formattedQuery} ORDER BY {orderBy}" : formattedQuery;
-            }
+            string formattedQuery = GetFormattedQueryForOData(query, skip, take, orderBy, whereClause, top);
             //_logger.LogInformation($"Formatted Query: {formattedQuery}");
             using (System.Data.IDbConnection con = new OracleConnection(_configuration.ConnectionString))
             {
@@ -680,6 +519,34 @@ namespace Dapper.OData.Infrastructure.Oracle
                 dbTransaction.Rollback();
                 throw;
             }
+        }
+        private string GetFormattedQueryForOData(string query, int? skip, int? take, string orderBy, string whereClause, int? top)
+        {
+            string formattedQuery;
+            if (skip is not null)
+            {
+                if (take is not null && orderBy is not null)
+                {
+                    formattedQuery = $@"SELECT * FROM ({query.ToUpper()}) V WHERE 1=1 {whereClause} ORDER BY {orderBy.ToUpper()} OFFSET ({skip}) ROWS FETCH NEXT ({take}) ROWS ONLY";
+                }
+                else
+                {
+                    throw new Exception("Every skip must have a take and an order by");
+                }
+            }
+            else if (top is not null)
+            {
+                formattedQuery = $@"SELECT * FROM ({query.ToUpper()}) V WHERE ROWNUM <= {top} {whereClause}";
+            }
+            else
+            {
+                formattedQuery = $@"SELECT * FROM ({query.ToUpper()}) V WHERE 1=1 {whereClause}";
+            }
+            if (skip is null)
+            {
+                formattedQuery = orderBy is not null ? $"{formattedQuery} ORDER BY {orderBy.ToUpper()}" : formattedQuery;
+            }
+            return formattedQuery;
         }
     }
 }

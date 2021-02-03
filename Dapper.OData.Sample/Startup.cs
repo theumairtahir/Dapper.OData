@@ -40,7 +40,7 @@ namespace Dapper.OData.Sample
                 c.DocInclusionPredicate((name, api) => api.HttpMethod != null);
             });
             services.AddRouting();
-            services.AddDapperOData(GetEdmModel(), Configuration.GetConnectionString("DefaultConnection"));
+            services.AddDapperOData(GetEdmModel(), Configuration.GetConnectionString("OracleConnection"), client: ClientType.OracleClient);
             services.AddOdataSwaggerSupport();
         }
 
