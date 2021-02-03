@@ -1,15 +1,14 @@
-﻿using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Oracle;
+using Oracle.ManagedDataAccess.Client;
 
-namespace Dapper.OData.Infrastructure
+namespace Dapper.OData.Infrastructure.Oracle
 {
-
     /// <summary>
     /// Handles the Db connections and commands
     /// </summary>
@@ -41,7 +40,7 @@ namespace Dapper.OData.Infrastructure
             //_logger.LogInformation($"Query: {query}");
             //_logger.LogInformation($"Command Type: {commandType}");
             //_logger.LogInformation($"Has Params: {@params is not null}");
-            using (System.Data.IDbConnection con = new SqlConnection(_configuration.ConnectionString))
+            using (System.Data.IDbConnection con = new OracleConnection(_configuration.ConnectionString))
             {
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
@@ -101,7 +100,7 @@ namespace Dapper.OData.Infrastructure
                 formattedQuery = orderBy is not null ? $"{formattedQuery} ORDER BY {orderBy}" : formattedQuery;
             }
             //_logger.LogInformation($"Formatted Query: {formattedQuery}");
-            using (System.Data.IDbConnection con = new SqlConnection(_configuration.ConnectionString))
+            using (System.Data.IDbConnection con = new OracleConnection(_configuration.ConnectionString))
             {
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
@@ -162,7 +161,7 @@ namespace Dapper.OData.Infrastructure
                 formattedQuery = orderBy is not null ? $"{formattedQuery} ORDER BY {orderBy}" : formattedQuery;
             }
             //_logger.LogInformation($"Formatted Query: {formattedQuery}");
-            using (System.Data.IDbConnection con = new SqlConnection(_configuration.ConnectionString))
+            using (System.Data.IDbConnection con = new OracleConnection(_configuration.ConnectionString))
             {
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
@@ -224,7 +223,7 @@ namespace Dapper.OData.Infrastructure
                 formattedQuery = orderBy is not null ? $"{formattedQuery} ORDER BY {orderBy}" : formattedQuery;
             }
             //_logger.LogInformation($"Formatted Query: {formattedQuery}");
-            using (System.Data.IDbConnection con = new SqlConnection(_configuration.ConnectionString))
+            using (System.Data.IDbConnection con = new OracleConnection(_configuration.ConnectionString))
             {
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
@@ -287,7 +286,7 @@ namespace Dapper.OData.Infrastructure
                 formattedQuery = orderBy is not null ? $"{formattedQuery} ORDER BY {orderBy}" : formattedQuery;
             }
             //_logger.LogInformation($"Formatted Query: {formattedQuery}");
-            using (System.Data.IDbConnection con = new SqlConnection(_configuration.ConnectionString))
+            using (System.Data.IDbConnection con = new OracleConnection(_configuration.ConnectionString))
             {
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
@@ -351,7 +350,7 @@ namespace Dapper.OData.Infrastructure
                 formattedQuery = orderBy is not null ? $"{formattedQuery} ORDER BY {orderBy}" : formattedQuery;
             }
             //_logger.LogInformation($"Formatted Query: {formattedQuery}");
-            using (System.Data.IDbConnection con = new SqlConnection(_configuration.ConnectionString))
+            using (System.Data.IDbConnection con = new OracleConnection(_configuration.ConnectionString))
             {
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
@@ -416,7 +415,7 @@ namespace Dapper.OData.Infrastructure
                 formattedQuery = orderBy is not null ? $"{formattedQuery} ORDER BY {orderBy}" : formattedQuery;
             }
             //_logger.LogInformation($"Formatted Query: {formattedQuery}");
-            using (System.Data.IDbConnection con = new SqlConnection(_configuration.ConnectionString))
+            using (System.Data.IDbConnection con = new OracleConnection(_configuration.ConnectionString))
             {
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
@@ -482,7 +481,7 @@ namespace Dapper.OData.Infrastructure
                 formattedQuery = orderBy is not null ? $"{formattedQuery} ORDER BY {orderBy}" : formattedQuery;
             }
             //_logger.LogInformation($"Formatted Query: {formattedQuery}");
-            using (System.Data.IDbConnection con = new SqlConnection(_configuration.ConnectionString))
+            using (System.Data.IDbConnection con = new OracleConnection(_configuration.ConnectionString))
             {
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
@@ -532,7 +531,7 @@ namespace Dapper.OData.Infrastructure
             //_logger.LogInformation($"Query: {query}");
             //_logger.LogInformation($"Command Type: {commandType}");
             //_logger.LogInformation($"Has Params: {@params is not null}");
-            using (System.Data.IDbConnection con = new SqlConnection(_configuration.ConnectionString))
+            using (System.Data.IDbConnection con = new OracleConnection(_configuration.ConnectionString))
             {
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
@@ -561,7 +560,7 @@ namespace Dapper.OData.Infrastructure
             //_logger.LogInformation($"Query: {query}");
             //_logger.LogInformation($"Command Type: {commandType}");
             //_logger.LogInformation($"Has Params: {@params is not null}");
-            using (System.Data.IDbConnection con = new SqlConnection(_configuration.ConnectionString))
+            using (System.Data.IDbConnection con = new OracleConnection(_configuration.ConnectionString))
             {
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
@@ -591,7 +590,7 @@ namespace Dapper.OData.Infrastructure
             //_logger.LogInformation($"Query: {query}");
             //_logger.LogInformation($"Command Type: {commandType}");
             //_logger.LogInformation($"Has Params: {@params is not null}");
-            using (System.Data.IDbConnection con = new SqlConnection(_configuration.ConnectionString))
+            using (System.Data.IDbConnection con = new OracleConnection(_configuration.ConnectionString))
             {
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
@@ -619,7 +618,7 @@ namespace Dapper.OData.Infrastructure
             //_logger.LogInformation($"Query: {query}");
             //_logger.LogInformation($"Command Type: {commandType}");
             //_logger.LogInformation($"Has Params: {@params is not null}");
-            using (System.Data.IDbConnection con = new SqlConnection(_configuration.ConnectionString))
+            using (System.Data.IDbConnection con = new OracleConnection(_configuration.ConnectionString))
             {
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
@@ -646,7 +645,7 @@ namespace Dapper.OData.Infrastructure
             //_logger.LogInformation($"Query: {query}");
             //_logger.LogInformation($"Command Type: {commandType}");
             //_logger.LogInformation($"Has Params: {@params is not null}");
-            using (System.Data.IDbConnection con = new SqlConnection(_configuration.ConnectionString))
+            using (System.Data.IDbConnection con = new OracleConnection(_configuration.ConnectionString))
             {
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
@@ -668,7 +667,7 @@ namespace Dapper.OData.Infrastructure
             {
                 throw new ArgumentNullException(nameof(transaction));
             }
-            using System.Data.IDbConnection con = new SqlConnection(_configuration.ConnectionString);
+            using System.Data.IDbConnection con = new OracleConnection(_configuration.ConnectionString);
             var dbTransaction = con.BeginTransaction();
             try
             {

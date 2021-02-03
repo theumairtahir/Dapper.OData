@@ -28,6 +28,7 @@
     <PackageReference Include="Microsoft.AspNetCore.OData" Version="8.0.0-preview2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="2.19.101" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
   </ItemGroup>
 

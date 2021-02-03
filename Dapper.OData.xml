@@ -4,236 +4,6 @@
         <name>Dapper.OData</name>
     </assembly>
     <members>
-        <member name="T:Dapper.OData.Infrastructure.IDbConnection">
-            <summary>
-            Handles the Db connections and commands
-            </summary>
-        </member>
-        <member name="M:Dapper.OData.Infrastructure.IDbConnection.ExecuteQuery(System.String,System.Data.CommandType,System.Boolean@,System.Object,System.Data.IDbTransaction)">
-            <summary>
-            Returns the number of rows affected by the command
-            </summary>
-            <param name="query">the command to be executed</param>
-            <param name="commandType">type of the command (query/procedure)</param>
-            <param name="isSuccessfull">out flag which indicates the success of the operation</param>
-            <param name="params">parameters for the command</param>
-            <param name="transaction"></param>
-        </member>
-        <member name="M:Dapper.OData.Infrastructure.IDbConnection.ExecuteTransaction(System.Func{System.Data.IDbTransaction,System.Boolean})">
-            <summary>
-            Runs a set on commands in a transaction
-            </summary>
-            <param name="transaction"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Dapper.OData.Infrastructure.IDbConnection.GetListResult``1(System.String,System.Data.CommandType,System.Boolean@,System.Object,System.Data.IDbTransaction)">
-            <summary>
-            Returns the data extracted from the db in the form of list
-            </summary>
-            <typeparam name="T">Any Model Matching the query result</typeparam>
-            <param name="query">The command which fetches the data</param>
-            <param name="commandType">Type of the command</param>
-            <param name="isDataFound">Out flag which indicates the presence of data</param>
-            <param name="params">parameters of a query</param>
-            <param name="transaction"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Dapper.OData.Infrastructure.IDbConnection.GetListResult``2(System.String,System.Data.CommandType,System.Func{``0,``1,``0},System.Boolean@,System.Object,System.Data.IDbTransaction)">
-            <summary>
-            Returns the data extracted from the db in the form of list (Multi object mapper)
-            </summary>
-            <typeparam name="T">Any Model Matching the query result</typeparam>
-            <typeparam name="U">Sub-model</typeparam>
-            <param name="query">The command which fetches the data</param>
-            <param name="commandType">Type of the command</param>
-            <param name="map">object mapping anonymous function</param>
-            <param name="isDataFound">Out flag which indicates the presence of data</param>
-            <param name="params">parameters of a query</param>
-            <param name="transaction"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Dapper.OData.Infrastructure.IDbConnection.GetQueryableResult``1(System.String,System.Boolean@,System.Object,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Data.IDbTransaction)">
-            <summary>
-            This action will return those rows which will be fetched by the OData Endpoint
-            </summary>
-            <typeparam name="T">Type Result Model</typeparam>
-            <param name="query">Command To Fetch Data (Should only be query/text type)</param>
-            <param name="isDataFound">flag to check whether record is present for a certain query</param>
-            <param name="params">parameters to pass into the query</param>
-            <param name="filter">Filter to be applied on to the data into the database</param>
-            <param name="top">Number of top rows selected</param>
-            <param name="skip">Skip the number of rows (Mostly used to get nth rows)</param>
-            <param name="take">Number of rows taken after nth skip (Should be used with skip)</param>
-            <param name="orderBy">Orders the data</param>
-            <param name="transaction"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Dapper.OData.Infrastructure.IDbConnection.GetQueryableResult``2(System.String,System.Func{``0,``1,``0},System.String,System.Boolean@,System.Object,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Data.IDbTransaction)">
-            <summary>
-            This action will return those rows which will be fetched by the OData Endpoint
-            </summary>
-            <typeparam name="T">Type Result Model</typeparam>
-            <typeparam name="U">Sub-model</typeparam>
-            <param name="splitOn">It is a comma-separated string that tells Dapper when the returned columns must be mapped to the next object.</param>
-            <param name="query">Command To Fetch Data (Should only be query/text type)</param>
-            <param name="map">Model Mapping</param>
-            <param name="isDataFound">flag to check whether record is present for a certain query</param>
-            <param name="params">parameters to pass into the query</param>
-            <param name="filter">Filter to be applied on to the data into the database</param>
-            <param name="top">Number of top rows selected</param>
-            <param name="skip">Skip the number of rows (Mostly used to get nth rows)</param>
-            <param name="take">Number of rows taken after nth skip (Should be used with skip)</param>
-            <param name="orderBy">Orders the data</param>
-            <param name="transaction"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Dapper.OData.Infrastructure.IDbConnection.GetQueryableResult``3(System.String,System.Func{``0,``1,``2,``0},System.String,System.Boolean@,System.Object,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Data.IDbTransaction)">
-            <summary>
-            This action will return those rows which will be fetched by the OData Endpoint
-            </summary>
-            <typeparam name="T">Type Result Model</typeparam>
-            <typeparam name="U">Sub-model</typeparam>
-            <typeparam name="V">Sub-model</typeparam>
-            <param name="query">Command To Fetch Data (Should only be query/text type)</param>
-            <param name="map">Model Mapping</param>
-            <param name="splitOn">It is a comma-separated string that tells Dapper when the returned columns must be mapped to the next object.</param>
-            <param name="isDataFound">flag to check whether record is present for a certain query</param>
-            <param name="params">parameters to pass into the query</param>
-            <param name="filter">Filter to be applied on to the data into the database</param>
-            <param name="top">Number of top rows selected</param>
-            <param name="skip">Skip the number of rows (Mostly used to get nth rows)</param>
-            <param name="take">Number of rows taken after nth skip (Should be used with skip)</param>
-            <param name="orderBy">Orders the data</param>
-            <param name="transaction"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Dapper.OData.Infrastructure.IDbConnection.GetQueryableResult``4(System.String,System.Func{``0,``1,``2,``3,``0},System.String,System.Boolean@,System.Object,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Data.IDbTransaction)">
-            <summary>
-            This action will return those rows which will be fetched by the OData Endpoint
-            </summary>
-            <typeparam name="T">Type Result Model</typeparam>
-            <typeparam name="U">Sub-model</typeparam>
-            <typeparam name="V">Sub-model</typeparam>
-            <typeparam name="W">Sub-model</typeparam>
-            <param name="query">Command To Fetch Data (Should only be query/text type)</param>
-            <param name="map">Model Mapping</param>
-            <param name="splitOn">It is a comma-separated string that tells Dapper when the returned columns must be mapped to the next object.</param>
-            <param name="isDataFound">flag to check whether record is present for a certain query</param>
-            <param name="params">parameters to pass into the query</param>
-            <param name="filter">Filter to be applied on to the data into the database</param>
-            <param name="top">Number of top rows selected</param>
-            <param name="skip">Skip the number of rows (Mostly used to get nth rows)</param>
-            <param name="take">Number of rows taken after nth skip (Should be used with skip)</param>
-            <param name="orderBy">Orders the data</param>
-            <param name="transaction"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Dapper.OData.Infrastructure.IDbConnection.GetQueryableResult``5(System.String,System.Func{``0,``1,``2,``3,``4,``0},System.String,System.Boolean@,System.Object,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Data.IDbTransaction)">
-            <summary>
-            This action will return those rows which will be fetched by the OData Endpoint
-            </summary>
-            <typeparam name="T">Type Result Model</typeparam>
-            <typeparam name="U">Sub-model</typeparam>
-            <typeparam name="V">Sub-model</typeparam>
-            <typeparam name="W">Sub-model</typeparam>
-            <typeparam name="X">Sub-model</typeparam>
-            <param name="query">Command To Fetch Data (Should only be query/text type)</param>
-            <param name="map">Model Mapping</param>
-            <param name="splitOn">It is a comma-separated string that tells Dapper when the returned columns must be mapped to the next object.</param>
-            <param name="isDataFound">flag to check whether record is present for a certain query</param>
-            <param name="params">parameters to pass into the query</param>
-            <param name="filter">Filter to be applied on to the data into the database</param>
-            <param name="top">Number of top rows selected</param>
-            <param name="skip">Skip the number of rows (Mostly used to get nth rows)</param>
-            <param name="take">Number of rows taken after nth skip (Should be used with skip)</param>
-            <param name="orderBy">Orders the data</param>
-            <param name="transaction"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Dapper.OData.Infrastructure.IDbConnection.GetQueryableResult``6(System.String,System.Func{``0,``1,``2,``3,``4,``5,``0},System.String,System.Boolean@,System.Object,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Data.IDbTransaction)">
-            <summary>
-            This action will return those rows which will be fetched by the OData Endpoint
-            </summary>
-            <typeparam name="T">Type Result Model</typeparam>
-            <typeparam name="U">Sub-model</typeparam>
-            <typeparam name="V">Sub-model</typeparam>
-            <typeparam name="W">Sub-model</typeparam>
-            <typeparam name="X">Sub-model</typeparam>
-            <typeparam name="Y">Sub-model</typeparam>
-            <param name="query">Command To Fetch Data (Should only be query/text type)</param>
-            <param name="map">Model Mapping</param>
-            <param name="splitOn">It is a comma-separated string that tells Dapper when the returned columns must be mapped to the next object.</param>
-            <param name="isDataFound">flag to check whether record is present for a certain query</param>
-            <param name="params">parameters to pass into the query</param>
-            <param name="filter">Filter to be applied on to the data into the database</param>
-            <param name="top">Number of top rows selected</param>
-            <param name="skip">Skip the number of rows (Mostly used to get nth rows)</param>
-            <param name="take">Number of rows taken after nth skip (Should be used with skip)</param>
-            <param name="orderBy">Orders the data</param>
-            <param name="transaction"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Dapper.OData.Infrastructure.IDbConnection.GetQueryableResult``7(System.String,System.Func{``0,``1,``2,``3,``4,``5,``6,``0},System.String,System.Boolean@,System.Object,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Data.IDbTransaction)">
-            <summary>
-            This action will return those rows which will be fetched by the OData Endpoint
-            </summary>
-            <typeparam name="T">Type Result Model</typeparam>
-            <typeparam name="U">Sub-model</typeparam>
-            <typeparam name="V">Sub-model</typeparam>
-            <typeparam name="W">Sub-model</typeparam>
-            <typeparam name="X">Sub-model</typeparam>
-            <typeparam name="Y">Sub-model</typeparam>
-            <typeparam name="Z">Sub-model</typeparam>
-            <param name="query">Command To Fetch Data (Should only be query/text type)</param>
-            <param name="map">Model Mapping</param>
-            <param name="splitOn">It is a comma-separated string that tells Dapper when the returned columns must be mapped to the next object.</param>
-            <param name="isDataFound">flag to check whether record is present for a certain query</param>
-            <param name="params">parameters to pass into the query</param>
-            <param name="filter">Filter to be applied on to the data into the database</param>
-            <param name="top">Number of top rows selected</param>
-            <param name="skip">Skip the number of rows (Mostly used to get nth rows)</param>
-            <param name="take">Number of rows taken after nth skip (Should be used with skip)</param>
-            <param name="orderBy">Orders the data</param>
-            <param name="transaction"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Dapper.OData.Infrastructure.IDbConnection.GetScalerResult``1(System.String,System.Data.CommandType,System.Boolean@,System.Object,System.Data.IDbTransaction)">
-            <summary>
-            Returns the first column of the row of the data extracted from the db
-            </summary>
-            <typeparam name="T">Any Model Matching the query result</typeparam>
-            <param name="query">The command which fetches the data</param>
-            <param name="commandType">Type of the command</param>
-            <param name="isDataFound">Out flag which indicates the presence of data</param>
-            <param name="params">parameters of a query</param>
-            <param name="transaction"></param>
-        </member>
-        <member name="M:Dapper.OData.Infrastructure.IDbConnection.GetSingleResult``1(System.String,System.Data.CommandType,System.Boolean@,System.Object,System.Data.IDbTransaction)">
-            <summary>
-            Returns the first row of the data extracted from the db
-            </summary>
-            <typeparam name="T">Any Model Matching the query result</typeparam>
-            <param name="query">The command which fetches the data</param>
-            <param name="commandType">Type of the command</param>
-            <param name="isDataFound">Out flag which indicates the presence of data</param>
-            <param name="params">parameters of a query</param>
-            <param name="transaction"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Dapper.OData.Infrastructure.IDbConnection.GetSingleResult``2(System.String,System.Data.CommandType,System.Func{``0,``1,``0},System.Boolean@,System.Object,System.Data.IDbTransaction)">
-            <summary>
-            Returns the first row of the data extracted from the db (Multi object mapper)
-            </summary>
-            <typeparam name="T">Any Model Matching the query result</typeparam>
-            <typeparam name="U">Sub-model</typeparam>
-            <param name="query">The command which fetches the data</param>
-            <param name="commandType">Type of the command</param>
-            <param name="map">object mapping anonymous function</param>
-            <param name="isDataFound">Out flag which indicates the presence of data</param>
-            <param name="params">parameters of a query</param>
-            <param name="transaction"></param>
-            <returns></returns>
-        </member>
         <member name="T:Dapper.OData.Infrastructure.DbConnection">
             <summary>
             Handles the Db connections and commands
@@ -465,6 +235,483 @@
             </summary>
             <param name="transaction"></param>
             <returns></returns>
+        </member>
+        <member name="T:Dapper.OData.Infrastructure.IDbConnection">
+            <summary>
+            Handles the Db connections and commands
+            </summary>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.IDbConnection.ExecuteQuery(System.String,System.Data.CommandType,System.Boolean@,System.Object,System.Data.IDbTransaction)">
+            <summary>
+            Returns the number of rows affected by the command
+            </summary>
+            <param name="query">the command to be executed</param>
+            <param name="commandType">type of the command (query/procedure)</param>
+            <param name="isSuccessfull">out flag which indicates the success of the operation</param>
+            <param name="params">parameters for the command</param>
+            <param name="transaction"></param>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.IDbConnection.ExecuteTransaction(System.Func{System.Data.IDbTransaction,System.Boolean})">
+            <summary>
+            Runs a set on commands in a transaction
+            </summary>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.IDbConnection.GetListResult``1(System.String,System.Data.CommandType,System.Boolean@,System.Object,System.Data.IDbTransaction)">
+            <summary>
+            Returns the data extracted from the db in the form of list
+            </summary>
+            <typeparam name="T">Any Model Matching the query result</typeparam>
+            <param name="query">The command which fetches the data</param>
+            <param name="commandType">Type of the command</param>
+            <param name="isDataFound">Out flag which indicates the presence of data</param>
+            <param name="params">parameters of a query</param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.IDbConnection.GetListResult``2(System.String,System.Data.CommandType,System.Func{``0,``1,``0},System.Boolean@,System.Object,System.Data.IDbTransaction)">
+            <summary>
+            Returns the data extracted from the db in the form of list (Multi object mapper)
+            </summary>
+            <typeparam name="T">Any Model Matching the query result</typeparam>
+            <typeparam name="U">Sub-model</typeparam>
+            <param name="query">The command which fetches the data</param>
+            <param name="commandType">Type of the command</param>
+            <param name="map">object mapping anonymous function</param>
+            <param name="isDataFound">Out flag which indicates the presence of data</param>
+            <param name="params">parameters of a query</param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.IDbConnection.GetQueryableResult``1(System.String,System.Boolean@,System.Object,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Data.IDbTransaction)">
+            <summary>
+            This action will return those rows which will be fetched by the OData Endpoint
+            </summary>
+            <typeparam name="T">Type Result Model</typeparam>
+            <param name="query">Command To Fetch Data (Should only be query/text type)</param>
+            <param name="isDataFound">flag to check whether record is present for a certain query</param>
+            <param name="params">parameters to pass into the query</param>
+            <param name="filter">Filter to be applied on to the data into the database</param>
+            <param name="top">Number of top rows selected</param>
+            <param name="skip">Skip the number of rows (Mostly used to get nth rows)</param>
+            <param name="take">Number of rows taken after nth skip (Should be used with skip)</param>
+            <param name="orderBy">Orders the data</param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.IDbConnection.GetQueryableResult``2(System.String,System.Func{``0,``1,``0},System.String,System.Boolean@,System.Object,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Data.IDbTransaction)">
+            <summary>
+            This action will return those rows which will be fetched by the OData Endpoint
+            </summary>
+            <typeparam name="T">Type Result Model</typeparam>
+            <typeparam name="U">Sub-model</typeparam>
+            <param name="splitOn">It is a comma-separated string that tells Dapper when the returned columns must be mapped to the next object.</param>
+            <param name="query">Command To Fetch Data (Should only be query/text type)</param>
+            <param name="map">Model Mapping</param>
+            <param name="isDataFound">flag to check whether record is present for a certain query</param>
+            <param name="params">parameters to pass into the query</param>
+            <param name="filter">Filter to be applied on to the data into the database</param>
+            <param name="top">Number of top rows selected</param>
+            <param name="skip">Skip the number of rows (Mostly used to get nth rows)</param>
+            <param name="take">Number of rows taken after nth skip (Should be used with skip)</param>
+            <param name="orderBy">Orders the data</param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.IDbConnection.GetQueryableResult``3(System.String,System.Func{``0,``1,``2,``0},System.String,System.Boolean@,System.Object,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Data.IDbTransaction)">
+            <summary>
+            This action will return those rows which will be fetched by the OData Endpoint
+            </summary>
+            <typeparam name="T">Type Result Model</typeparam>
+            <typeparam name="U">Sub-model</typeparam>
+            <typeparam name="V">Sub-model</typeparam>
+            <param name="query">Command To Fetch Data (Should only be query/text type)</param>
+            <param name="map">Model Mapping</param>
+            <param name="splitOn">It is a comma-separated string that tells Dapper when the returned columns must be mapped to the next object.</param>
+            <param name="isDataFound">flag to check whether record is present for a certain query</param>
+            <param name="params">parameters to pass into the query</param>
+            <param name="filter">Filter to be applied on to the data into the database</param>
+            <param name="top">Number of top rows selected</param>
+            <param name="skip">Skip the number of rows (Mostly used to get nth rows)</param>
+            <param name="take">Number of rows taken after nth skip (Should be used with skip)</param>
+            <param name="orderBy">Orders the data</param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.IDbConnection.GetQueryableResult``4(System.String,System.Func{``0,``1,``2,``3,``0},System.String,System.Boolean@,System.Object,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Data.IDbTransaction)">
+            <summary>
+            This action will return those rows which will be fetched by the OData Endpoint
+            </summary>
+            <typeparam name="T">Type Result Model</typeparam>
+            <typeparam name="U">Sub-model</typeparam>
+            <typeparam name="V">Sub-model</typeparam>
+            <typeparam name="W">Sub-model</typeparam>
+            <param name="query">Command To Fetch Data (Should only be query/text type)</param>
+            <param name="map">Model Mapping</param>
+            <param name="splitOn">It is a comma-separated string that tells Dapper when the returned columns must be mapped to the next object.</param>
+            <param name="isDataFound">flag to check whether record is present for a certain query</param>
+            <param name="params">parameters to pass into the query</param>
+            <param name="filter">Filter to be applied on to the data into the database</param>
+            <param name="top">Number of top rows selected</param>
+            <param name="skip">Skip the number of rows (Mostly used to get nth rows)</param>
+            <param name="take">Number of rows taken after nth skip (Should be used with skip)</param>
+            <param name="orderBy">Orders the data</param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.IDbConnection.GetQueryableResult``5(System.String,System.Func{``0,``1,``2,``3,``4,``0},System.String,System.Boolean@,System.Object,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Data.IDbTransaction)">
+            <summary>
+            This action will return those rows which will be fetched by the OData Endpoint
+            </summary>
+            <typeparam name="T">Type Result Model</typeparam>
+            <typeparam name="U">Sub-model</typeparam>
+            <typeparam name="V">Sub-model</typeparam>
+            <typeparam name="W">Sub-model</typeparam>
+            <typeparam name="X">Sub-model</typeparam>
+            <param name="query">Command To Fetch Data (Should only be query/text type)</param>
+            <param name="map">Model Mapping</param>
+            <param name="splitOn">It is a comma-separated string that tells Dapper when the returned columns must be mapped to the next object.</param>
+            <param name="isDataFound">flag to check whether record is present for a certain query</param>
+            <param name="params">parameters to pass into the query</param>
+            <param name="filter">Filter to be applied on to the data into the database</param>
+            <param name="top">Number of top rows selected</param>
+            <param name="skip">Skip the number of rows (Mostly used to get nth rows)</param>
+            <param name="take">Number of rows taken after nth skip (Should be used with skip)</param>
+            <param name="orderBy">Orders the data</param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.IDbConnection.GetQueryableResult``6(System.String,System.Func{``0,``1,``2,``3,``4,``5,``0},System.String,System.Boolean@,System.Object,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Data.IDbTransaction)">
+            <summary>
+            This action will return those rows which will be fetched by the OData Endpoint
+            </summary>
+            <typeparam name="T">Type Result Model</typeparam>
+            <typeparam name="U">Sub-model</typeparam>
+            <typeparam name="V">Sub-model</typeparam>
+            <typeparam name="W">Sub-model</typeparam>
+            <typeparam name="X">Sub-model</typeparam>
+            <typeparam name="Y">Sub-model</typeparam>
+            <param name="query">Command To Fetch Data (Should only be query/text type)</param>
+            <param name="map">Model Mapping</param>
+            <param name="splitOn">It is a comma-separated string that tells Dapper when the returned columns must be mapped to the next object.</param>
+            <param name="isDataFound">flag to check whether record is present for a certain query</param>
+            <param name="params">parameters to pass into the query</param>
+            <param name="filter">Filter to be applied on to the data into the database</param>
+            <param name="top">Number of top rows selected</param>
+            <param name="skip">Skip the number of rows (Mostly used to get nth rows)</param>
+            <param name="take">Number of rows taken after nth skip (Should be used with skip)</param>
+            <param name="orderBy">Orders the data</param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.IDbConnection.GetQueryableResult``7(System.String,System.Func{``0,``1,``2,``3,``4,``5,``6,``0},System.String,System.Boolean@,System.Object,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Data.IDbTransaction)">
+            <summary>
+            This action will return those rows which will be fetched by the OData Endpoint
+            </summary>
+            <typeparam name="T">Type Result Model</typeparam>
+            <typeparam name="U">Sub-model</typeparam>
+            <typeparam name="V">Sub-model</typeparam>
+            <typeparam name="W">Sub-model</typeparam>
+            <typeparam name="X">Sub-model</typeparam>
+            <typeparam name="Y">Sub-model</typeparam>
+            <typeparam name="Z">Sub-model</typeparam>
+            <param name="query">Command To Fetch Data (Should only be query/text type)</param>
+            <param name="map">Model Mapping</param>
+            <param name="splitOn">It is a comma-separated string that tells Dapper when the returned columns must be mapped to the next object.</param>
+            <param name="isDataFound">flag to check whether record is present for a certain query</param>
+            <param name="params">parameters to pass into the query</param>
+            <param name="filter">Filter to be applied on to the data into the database</param>
+            <param name="top">Number of top rows selected</param>
+            <param name="skip">Skip the number of rows (Mostly used to get nth rows)</param>
+            <param name="take">Number of rows taken after nth skip (Should be used with skip)</param>
+            <param name="orderBy">Orders the data</param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.IDbConnection.GetScalerResult``1(System.String,System.Data.CommandType,System.Boolean@,System.Object,System.Data.IDbTransaction)">
+            <summary>
+            Returns the first column of the row of the data extracted from the db
+            </summary>
+            <typeparam name="T">Any Model Matching the query result</typeparam>
+            <param name="query">The command which fetches the data</param>
+            <param name="commandType">Type of the command</param>
+            <param name="isDataFound">Out flag which indicates the presence of data</param>
+            <param name="params">parameters of a query</param>
+            <param name="transaction"></param>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.IDbConnection.GetSingleResult``1(System.String,System.Data.CommandType,System.Boolean@,System.Object,System.Data.IDbTransaction)">
+            <summary>
+            Returns the first row of the data extracted from the db
+            </summary>
+            <typeparam name="T">Any Model Matching the query result</typeparam>
+            <param name="query">The command which fetches the data</param>
+            <param name="commandType">Type of the command</param>
+            <param name="isDataFound">Out flag which indicates the presence of data</param>
+            <param name="params">parameters of a query</param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.IDbConnection.GetSingleResult``2(System.String,System.Data.CommandType,System.Func{``0,``1,``0},System.Boolean@,System.Object,System.Data.IDbTransaction)">
+            <summary>
+            Returns the first row of the data extracted from the db (Multi object mapper)
+            </summary>
+            <typeparam name="T">Any Model Matching the query result</typeparam>
+            <typeparam name="U">Sub-model</typeparam>
+            <param name="query">The command which fetches the data</param>
+            <param name="commandType">Type of the command</param>
+            <param name="map">object mapping anonymous function</param>
+            <param name="isDataFound">Out flag which indicates the presence of data</param>
+            <param name="params">parameters of a query</param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Dapper.OData.Infrastructure.Oracle.DbConnection">
+            <summary>
+            Handles the Db connections and commands
+            </summary>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.Oracle.DbConnection.GetListResult``1(System.String,System.Data.CommandType,System.Boolean@,System.Object,System.Data.IDbTransaction)">
+            <summary>
+            Returns the data extracted from the db in the form of list
+            </summary>
+            <typeparam name="T">Any Model Matching the query result</typeparam>
+            <param name="query">The command which fetches the data</param>
+            <param name="commandType">Type of the command</param>
+            <param name="isDataFound">Out flag which indicates the presence of data</param>
+            <param name="params">parameters of a query</param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.Oracle.DbConnection.GetQueryableResult``1(System.String,System.Boolean@,System.Object,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Data.IDbTransaction)">
+            <summary>
+            This action will return those rows which will be fetched by the OData Endpoint
+            </summary>
+            <typeparam name="T">Type Result Model</typeparam>
+            <param name="query">Command To Fetch Data (Should only be query/text type)</param>
+            <param name="isDataFound">flag to check whether record is present for a certain query</param>
+            <param name="params">parameters to pass into the query</param>
+            <param name="filter">Filter to be applied on to the data into the database</param>
+            <param name="top">Number of top rows selected</param>
+            <param name="skip">Skip the number of rows (Mostly used to get nth rows)</param>
+            <param name="take">Number of rows taken after nth skip (Should be used with skip)</param>
+            <param name="orderBy">Orders the data</param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.Oracle.DbConnection.GetQueryableResult``2(System.String,System.Func{``0,``1,``0},System.String,System.Boolean@,System.Object,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Data.IDbTransaction)">
+            <summary>
+            This action will return those rows which will be fetched by the OData Endpoint
+            </summary>
+            <typeparam name="T">Type Result Model</typeparam>
+            <typeparam name="U">Sub-model</typeparam>
+            <param name="query">Command To Fetch Data (Should only be query/text type)</param>
+            <param name="map">Model Mapping</param>
+            <param name="isDataFound">flag to check whether record is present for a certain query</param>
+            <param name="splitOn">It is a comma-separated string that tells Dapper when the returned columns must be mapped to the next object.</param>
+            <param name="params">parameters to pass into the query</param>
+            <param name="filter">Filter to be applied on to the data into the database</param>
+            <param name="top">Number of top rows selected</param>
+            <param name="skip">Skip the number of rows (Mostly used to get nth rows)</param>
+            <param name="take">Number of rows taken after nth skip (Should be used with skip)</param>
+            <param name="orderBy">Orders the data</param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.Oracle.DbConnection.GetQueryableResult``3(System.String,System.Func{``0,``1,``2,``0},System.String,System.Boolean@,System.Object,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Data.IDbTransaction)">
+            <summary>
+            This action will return those rows which will be fetched by the OData Endpoint
+            </summary>
+            <typeparam name="T">Type Result Model</typeparam>
+            <typeparam name="U">Sub-model</typeparam>
+            <typeparam name="V">Sub-model</typeparam>
+            <param name="query">Command To Fetch Data (Should only be query/text type)</param>
+            <param name="map">Model Mapping</param>
+            <param name="splitOn">It is a comma-separated string that tells Dapper when the returned columns must be mapped to the next object.</param>
+            <param name="isDataFound">flag to check whether record is present for a certain query</param>
+            <param name="params">parameters to pass into the query</param>
+            <param name="filter">Filter to be applied on to the data into the database</param>
+            <param name="top">Number of top rows selected</param>
+            <param name="skip">Skip the number of rows (Mostly used to get nth rows)</param>
+            <param name="take">Number of rows taken after nth skip (Should be used with skip)</param>
+            <param name="orderBy">Orders the data</param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.Oracle.DbConnection.GetQueryableResult``4(System.String,System.Func{``0,``1,``2,``3,``0},System.String,System.Boolean@,System.Object,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Data.IDbTransaction)">
+            <summary>
+            This action will return those rows which will be fetched by the OData Endpoint
+            </summary>
+            <typeparam name="T">Type Result Model</typeparam>
+            <typeparam name="U">Sub-model</typeparam>
+            <typeparam name="V">Sub-model</typeparam>
+            <typeparam name="W">Sub-model</typeparam>
+            <param name="query">Command To Fetch Data (Should only be query/text type)</param>
+            <param name="map">Model Mapping</param>
+            <param name="splitOn">It is a comma-separated string that tells Dapper when the returned columns must be mapped to the next object.</param>
+            <param name="isDataFound">flag to check whether record is present for a certain query</param>
+            <param name="params">parameters to pass into the query</param>
+            <param name="filter">Filter to be applied on to the data into the database</param>
+            <param name="top">Number of top rows selected</param>
+            <param name="skip">Skip the number of rows (Mostly used to get nth rows)</param>
+            <param name="take">Number of rows taken after nth skip (Should be used with skip)</param>
+            <param name="orderBy">Orders the data</param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.Oracle.DbConnection.GetQueryableResult``5(System.String,System.Func{``0,``1,``2,``3,``4,``0},System.String,System.Boolean@,System.Object,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Data.IDbTransaction)">
+            <summary>
+            This action will return those rows which will be fetched by the OData Endpoint
+            </summary>
+            <typeparam name="T">Type Result Model</typeparam>
+            <typeparam name="U">Sub-model</typeparam>
+            <typeparam name="V">Sub-model</typeparam>
+            <typeparam name="W">Sub-model</typeparam>
+            <typeparam name="X">Sub-model</typeparam>
+            <param name="query">Command To Fetch Data (Should only be query/text type)</param>
+            <param name="map">Model Mapping</param>
+            <param name="splitOn">It is a comma-separated string that tells Dapper when the returned columns must be mapped to the next object.</param>
+            <param name="isDataFound">flag to check whether record is present for a certain query</param>
+            <param name="params">parameters to pass into the query</param>
+            <param name="filter">Filter to be applied on to the data into the database</param>
+            <param name="top">Number of top rows selected</param>
+            <param name="skip">Skip the number of rows (Mostly used to get nth rows)</param>
+            <param name="take">Number of rows taken after nth skip (Should be used with skip)</param>
+            <param name="orderBy">Orders the data</param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.Oracle.DbConnection.GetQueryableResult``6(System.String,System.Func{``0,``1,``2,``3,``4,``5,``0},System.String,System.Boolean@,System.Object,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Data.IDbTransaction)">
+            <summary>
+            This action will return those rows which will be fetched by the OData Endpoint
+            </summary>
+            <typeparam name="T">Type Result Model</typeparam>
+            <typeparam name="U">Sub-model</typeparam>
+            <typeparam name="V">Sub-model</typeparam>
+            <typeparam name="W">Sub-model</typeparam>
+            <typeparam name="X">Sub-model</typeparam>
+            <typeparam name="Y">Sub-model</typeparam>
+            <param name="query">Command To Fetch Data (Should only be query/text type)</param>
+            <param name="map">Model Mapping</param>
+            <param name="splitOn">It is a comma-separated string that tells Dapper when the returned columns must be mapped to the next object.</param>
+            <param name="isDataFound">flag to check whether record is present for a certain query</param>
+            <param name="params">parameters to pass into the query</param>
+            <param name="filter">Filter to be applied on to the data into the database</param>
+            <param name="top">Number of top rows selected</param>
+            <param name="skip">Skip the number of rows (Mostly used to get nth rows)</param>
+            <param name="take">Number of rows taken after nth skip (Should be used with skip)</param>
+            <param name="orderBy">Orders the data</param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.Oracle.DbConnection.GetQueryableResult``7(System.String,System.Func{``0,``1,``2,``3,``4,``5,``6,``0},System.String,System.Boolean@,System.Object,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.Data.IDbTransaction)">
+            <summary>
+            This action will return those rows which will be fetched by the OData Endpoint
+            </summary>
+            <typeparam name="T">Type Result Model</typeparam>
+            <typeparam name="U">Sub-model</typeparam>
+            <typeparam name="V">Sub-model</typeparam>
+            <typeparam name="W">Sub-model</typeparam>
+            <typeparam name="X">Sub-model</typeparam>
+            <typeparam name="Y">Sub-model</typeparam>
+            <typeparam name="Z">Sub-model</typeparam>
+            <param name="query">Command To Fetch Data (Should only be query/text type)</param>
+            <param name="map">Model Mapping</param>
+            <param name="splitOn">It is a comma-separated string that tells Dapper when the returned columns must be mapped to the next object.</param>
+            <param name="isDataFound">flag to check whether record is present for a certain query</param>
+            <param name="params">parameters to pass into the query</param>
+            <param name="filter">Filter to be applied on to the data into the database</param>
+            <param name="top">Number of top rows selected</param>
+            <param name="skip">Skip the number of rows (Mostly used to get nth rows)</param>
+            <param name="take">Number of rows taken after nth skip (Should be used with skip)</param>
+            <param name="orderBy">Orders the data</param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.Oracle.DbConnection.GetListResult``2(System.String,System.Data.CommandType,System.Func{``0,``1,``0},System.Boolean@,System.Object,System.Data.IDbTransaction)">
+            <summary>
+            Returns the data extracted from the db in the form of list (Multi object mapper)
+            </summary>
+            <typeparam name="T">Any Model Matching the query result</typeparam>
+            <typeparam name="U">Sub-model</typeparam>
+            <param name="query">The command which fetches the data</param>
+            <param name="commandType">Type of the command</param>
+            <param name="map">object mapping anonymous function</param>
+            <param name="isDataFound">Out flag which indicates the presence of data</param>
+            <param name="params">parameters of a query</param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.Oracle.DbConnection.GetSingleResult``1(System.String,System.Data.CommandType,System.Boolean@,System.Object,System.Data.IDbTransaction)">
+            <summary>
+            Returns the first row of the data extracted from the db
+            </summary>
+            <typeparam name="T">Any Model Matching the query result</typeparam>
+            <param name="query">The command which fetches the data</param>
+            <param name="commandType">Type of the command</param>
+            <param name="isDataFound">Out flag which indicates the presence of data</param>
+            <param name="params">parameters of a query</param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.Oracle.DbConnection.GetSingleResult``2(System.String,System.Data.CommandType,System.Func{``0,``1,``0},System.Boolean@,System.Object,System.Data.IDbTransaction)">
+            <summary>
+            Returns the first row of the data extracted from the db (Multi object mapper)
+            </summary>
+            <typeparam name="T">Any Model Matching the query result</typeparam>
+            <typeparam name="U">Sub-model</typeparam>
+            <param name="query">The command which fetches the data</param>
+            <param name="commandType">Type of the command</param>
+            <param name="map">object mapping anonymous function</param>
+            <param name="isDataFound">Out flag which indicates the presence of data</param>
+            <param name="params">parameters of a query</param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.Oracle.DbConnection.GetScalerResult``1(System.String,System.Data.CommandType,System.Boolean@,System.Object,System.Data.IDbTransaction)">
+            <summary>
+            Returns the first column of the row of the data extracted from the db
+            </summary>
+            <typeparam name="T">Any Model Matching the query result</typeparam>
+            <param name="query">The command which fetches the data</param>
+            <param name="commandType">Type of the command</param>
+            <param name="isDataFound">Out flag which indicates the presence of data</param>
+            <param name="params">parameters of a query</param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.Oracle.DbConnection.ExecuteQuery(System.String,System.Data.CommandType,System.Boolean@,System.Object,System.Data.IDbTransaction)">
+            <summary>
+            Returns the number of rows affected by the command
+            </summary>
+            <param name="query">the command to be executed</param>
+            <param name="commandType">type of the command (query/procedure)</param>
+            <param name="isSuccessfull">out flag which indicates the success of the operation</param>
+            <param name="params">parameters for the command</param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.Oracle.DbConnection.ExecuteTransaction(System.Func{System.Data.IDbTransaction,System.Boolean})">
+            <summary>
+            Runs a set on commands in a transaction
+            </summary>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Dapper.OData.ClientType">
+            <summary>
+            Type of database client
+            </summary>
+        </member>
+        <member name="F:Dapper.OData.ClientType.SqlClient">
+            <summary>
+            MS SQL Server Client
+            </summary>
+        </member>
+        <member name="F:Dapper.OData.ClientType.OracleClient">
+            <summary>
+            Oracle Db Client
+            </summary>
         </member>
     </members>
 </doc>
