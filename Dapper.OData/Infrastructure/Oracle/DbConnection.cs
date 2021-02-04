@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Oracle;
+using Dapper.Oracle;
 using Oracle.ManagedDataAccess.Client;
 
 namespace Dapper.OData.Infrastructure.Oracle
@@ -37,6 +35,7 @@ namespace Dapper.OData.Infrastructure.Oracle
         public List<T> GetListResult<T>(string query, CommandType commandType, out bool isDataFound, object @params = null, IDbTransaction transaction = null)
         {
             List<T> result;
+            OracleDynamicParameters oracleParameters = GetOracleParameters(@params, commandType);
             //_logger.LogInformation($"Query: {query}");
             //_logger.LogInformation($"Command Type: {commandType}");
             //_logger.LogInformation($"Has Params: {@params is not null}");
@@ -45,7 +44,7 @@ namespace Dapper.OData.Infrastructure.Oracle
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
                 {
-                    return con.Query<T>(sql: query, commandType: commandType, commandTimeout: _configuration.ConnectionTimeout, param: @params, transaction: transaction).ToList();
+                    return con.Query<T>(sql: query, commandType: commandType, commandTimeout: _configuration.ConnectionTimeout, param: (oracleParameters is null ? @params : oracleParameters), transaction: transaction).ToList();
                 }, out bool isSuccessfull, true);
                 //_logger.LogInformation($"Result Count: {result?.Count}");
             }
@@ -367,6 +366,7 @@ namespace Dapper.OData.Infrastructure.Oracle
         public List<T> GetListResult<T, U>(string query, CommandType commandType, Func<T, U, T> map, out bool isDataFound, object @params = null, IDbTransaction transaction = null)
         {
             List<T> result;
+            OracleDynamicParameters oracleParameters = GetOracleParameters(@params, commandType);
             //_logger.LogInformation($"Query: {query}");
             //_logger.LogInformation($"Command Type: {commandType}");
             //_logger.LogInformation($"Has Params: {@params is not null}");
@@ -375,7 +375,7 @@ namespace Dapper.OData.Infrastructure.Oracle
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
                 {
-                    return con.Query(sql: query, commandType: commandType, commandTimeout: _configuration.ConnectionTimeout, param: @params, transaction: transaction, map: map).ToList();
+                    return con.Query(sql: query, commandType: commandType, commandTimeout: _configuration.ConnectionTimeout, param: (oracleParameters is null ? @params : oracleParameters), transaction: transaction, map: map).ToList();
                 }, out bool isSuccessfull, true);
                 //_logger.LogInformation($"Result Count: {result?.Count}");
             }
@@ -396,6 +396,7 @@ namespace Dapper.OData.Infrastructure.Oracle
         public T GetSingleResult<T>(string query, CommandType commandType, out bool isDataFound, object @params = null, IDbTransaction transaction = null)
         {
             T result;
+            OracleDynamicParameters oracleParameters = GetOracleParameters(@params, commandType);
             //_logger.LogInformation($"Query: {query}");
             //_logger.LogInformation($"Command Type: {commandType}");
             //_logger.LogInformation($"Has Params: {@params is not null}");
@@ -404,7 +405,7 @@ namespace Dapper.OData.Infrastructure.Oracle
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
                 {
-                    return con.Query<T>(sql: query, commandType: commandType, commandTimeout: _configuration.ConnectionTimeout, param: @params, transaction: transaction).First();
+                    return con.Query<T>(sql: query, commandType: commandType, commandTimeout: _configuration.ConnectionTimeout, param: (oracleParameters is null ? @params : oracleParameters), transaction: transaction).First();
                 }, out bool isSuccessfull, true);
             }
             isDataFound = (result != null);
@@ -426,6 +427,7 @@ namespace Dapper.OData.Infrastructure.Oracle
         public T GetSingleResult<T, U>(string query, CommandType commandType, Func<T, U, T> map, out bool isDataFound, object @params = null, IDbTransaction transaction = null)
         {
             T result;
+            OracleDynamicParameters oracleParameters = GetOracleParameters(@params, commandType);
             //_logger.LogInformation($"Query: {query}");
             //_logger.LogInformation($"Command Type: {commandType}");
             //_logger.LogInformation($"Has Params: {@params is not null}");
@@ -434,7 +436,7 @@ namespace Dapper.OData.Infrastructure.Oracle
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
                 {
-                    return con.Query<T, U, T>(sql: query, commandType: commandType, commandTimeout: _configuration.ConnectionTimeout, param: @params, transaction: transaction, map: map).Single();
+                    return con.Query(sql: query, commandType: commandType, commandTimeout: _configuration.ConnectionTimeout, param: (oracleParameters is null ? @params : oracleParameters), transaction: transaction, map: map).Single();
                 }, out bool isSuccessfull, true);
             }
             isDataFound = (result != null);
@@ -454,6 +456,7 @@ namespace Dapper.OData.Infrastructure.Oracle
         public T GetScalerResult<T>(string query, CommandType commandType, out bool isDataFound, object @params = null, IDbTransaction transaction = null)
         {
             T result;
+            OracleDynamicParameters oracleParameters = GetOracleParameters(@params, commandType);
             //_logger.LogInformation($"Query: {query}");
             //_logger.LogInformation($"Command Type: {commandType}");
             //_logger.LogInformation($"Has Params: {@params is not null}");
@@ -462,7 +465,7 @@ namespace Dapper.OData.Infrastructure.Oracle
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
                 {
-                    return (T)con.ExecuteScalar(sql: query, commandType: commandType, commandTimeout: _configuration.ConnectionTimeout, param: @params, transaction: transaction);
+                    return (T)con.ExecuteScalar(sql: query, commandType: commandType, commandTimeout: _configuration.ConnectionTimeout, param: (oracleParameters is null ? @params : oracleParameters), transaction: transaction);
                 }, out bool isSuccessfull, true);
             }
             isDataFound = (result != null);
@@ -481,6 +484,7 @@ namespace Dapper.OData.Infrastructure.Oracle
         public int ExecuteQuery(string query, CommandType commandType, out bool isSuccessfull, object @params = null, IDbTransaction transaction = null)
         {
             int result = 0;
+            OracleDynamicParameters oracleParameters = GetOracleParameters(@params, commandType);
             //_logger.LogInformation($"Query: {query}");
             //_logger.LogInformation($"Command Type: {commandType}");
             //_logger.LogInformation($"Has Params: {@params is not null}");
@@ -489,7 +493,7 @@ namespace Dapper.OData.Infrastructure.Oracle
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
                 {
-                    return con.Execute(query, param: @params, commandTimeout: _configuration.ConnectionTimeout, commandType: commandType, transaction: transaction);
+                    return con.Execute(query, param: (oracleParameters is null ? @params : oracleParameters), commandTimeout: _configuration.ConnectionTimeout, commandType: commandType, transaction: transaction);
                 }, out isSuccessfull, true);
             }
             isSuccessfull = isSuccessfull ? (result > 0) : isSuccessfull;
@@ -520,7 +524,7 @@ namespace Dapper.OData.Infrastructure.Oracle
                 throw;
             }
         }
-        private string GetFormattedQueryForOData(string query, int? skip, int? take, string orderBy, string whereClause, int? top)
+        private static string GetFormattedQueryForOData(string query, int? skip, int? take, string orderBy, string whereClause, int? top)
         {
             string formattedQuery;
             if (skip is not null)
@@ -547,6 +551,22 @@ namespace Dapper.OData.Infrastructure.Oracle
                 formattedQuery = orderBy is not null ? $"{formattedQuery} ORDER BY {orderBy.ToUpper()}" : formattedQuery;
             }
             return formattedQuery;
+        }
+        private static OracleDynamicParameters GetOracleParameters(object parameters, CommandType commandType)
+        {
+            OracleDynamicParameters oracleParameters = null;
+            if (commandType == CommandType.StoredProcedure)
+            {
+                try
+                {
+                    oracleParameters = (OracleDynamicParameters)parameters;
+                }
+                catch (InvalidCastException ex)
+                {
+                    throw new Exception("In case of oracle connection, the params must be provided of the type of OracleDynamicParameters", ex);
+                }
+            }
+            return oracleParameters;
         }
     }
 }
