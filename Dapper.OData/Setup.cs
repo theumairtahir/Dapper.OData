@@ -7,7 +7,7 @@ namespace Dapper.OData
 {
     public static class Setup
     {
-        public static void AddDapperOData(this IServiceCollection services, IEdmModel edmModel, string conString, int connectionTimeout = 5, ClientType client = ClientType.SqlClient)
+        public static void AddDapperOData(this IServiceCollection services, IEdmModel edmModel, string conString, int connectionTimeout = 5, ClientType client = ClientType.SqlClient, bool matchNamesWithUnderscores = false)
         {
             services.AddOData(opt => opt
                                     .AddModel("oData", edmModel)
@@ -27,6 +27,7 @@ namespace Dapper.OData
                     services.AddTransient<IDbConnection, Infrastructure.Oracle.DbConnection>();
                     break;
             }
+            DefaultTypeMap.MatchNamesWithUnderscores = matchNamesWithUnderscores;
         }
 
     }
