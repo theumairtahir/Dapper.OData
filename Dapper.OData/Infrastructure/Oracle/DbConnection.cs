@@ -496,7 +496,7 @@ namespace Dapper.OData.Infrastructure.Oracle
                     return con.Execute(query, param: (oracleParameters is null ? @params : oracleParameters), commandTimeout: _configuration.ConnectionTimeout, commandType: commandType, transaction: transaction);
                 }, out isSuccessfull, true);
             }
-            isSuccessfull = isSuccessfull ? (result > 0) : isSuccessfull;
+            //isSuccessfull = isSuccessfull ? (result > 0) : isSuccessfull;
             return result;
         }
         /// <summary>
@@ -510,18 +510,34 @@ namespace Dapper.OData.Infrastructure.Oracle
             {
                 throw new ArgumentNullException(nameof(transaction));
             }
-            using System.Data.IDbConnection con = new OracleConnection(_configuration.ConnectionString);
-            var dbTransaction = con.BeginTransaction();
+            OracleConnection con = new OracleConnection(_configuration.ConnectionString);
+            if (con.State != ConnectionState.Open)
+            {
+                con.Open();
+            }
+            var dbTransaction = con.BeginTransaction(IsolationLevel.ReadCommitted);
             try
             {
-                transaction.Invoke(dbTransaction);
-                dbTransaction.Commit();
-                return true;
+                var isTranstactionSuccessfull = transaction.Invoke(dbTransaction);
+                if (isTranstactionSuccessfull)
+                {
+                    dbTransaction.Commit();
+                }
+                else
+                {
+                    dbTransaction.Rollback();
+                }
+                return isTranstactionSuccessfull;
             }
             catch (Exception ex)
             {
                 dbTransaction.Rollback();
                 throw;
+            }
+            finally
+            {
+                con.Close();
+                con.Dispose();
             }
         }
         private static string GetFormattedQueryForOData(string query, int? skip, int? take, string orderBy, string whereClause, int? top)

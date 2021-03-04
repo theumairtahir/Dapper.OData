@@ -672,9 +672,16 @@ namespace Dapper.OData.Infrastructure
             var dbTransaction = con.BeginTransaction();
             try
             {
-                transaction.Invoke(dbTransaction);
-                dbTransaction.Commit();
-                return true;
+                var isTranstactionSuccessfull = transaction.Invoke(dbTransaction);
+                if (isTranstactionSuccessfull)
+                {
+                    dbTransaction.Commit();
+                }
+                else
+                {
+                    dbTransaction.Rollback();
+                }
+                return isTranstactionSuccessfull;
             }
             catch (Exception ex)
             {
