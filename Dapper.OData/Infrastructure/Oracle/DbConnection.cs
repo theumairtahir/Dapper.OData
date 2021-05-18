@@ -49,7 +49,7 @@ namespace Dapper.OData.Infrastructure.Oracle
                         return con.Query<T>(sql: query, commandType: commandType, commandTimeout: _configuration.ConnectionTimeout, param: (oracleParameters is null ? @params : oracleParameters)).ToList();
                     }, out bool isSuccessfull, true);
                     //_logger.LogInformation($"Result Count: {result?.Count}");
-                } 
+                }
             }
             else
             {
@@ -95,7 +95,7 @@ namespace Dapper.OData.Infrastructure.Oracle
                     {
                         return con.Query<T>(sql: formattedQuery, commandType: CommandType.Text, commandTimeout: _configuration.ConnectionTimeout, param: @params).AsQueryable();
                     }, out bool isSuccessFull, true);
-                } 
+                }
             }
             else
             {
@@ -143,7 +143,7 @@ namespace Dapper.OData.Infrastructure.Oracle
                     {
                         return con.Query(sql: formattedQuery, commandType: CommandType.Text, commandTimeout: _configuration.ConnectionTimeout, param: @params, map: map, splitOn: splitOn).AsQueryable();
                     }, out bool isSuccessFull, true);
-                } 
+                }
             }
             else
             {
@@ -473,6 +473,53 @@ namespace Dapper.OData.Infrastructure.Oracle
             //_logger.LogInformation($"Data Found: {isDataFound}");
             return result;
         }
+        public List<dynamic> GetMultiResults(string query, int resultsCount, CommandType commandType, out bool isDataFound, object @params = null, IDbTransaction transaction = null)
+        {
+            List<dynamic> result;
+            OracleDynamicParameters oracleParameters = GetOracleParameters(@params, commandType);
+            bool isSuccessfull;
+            //_logger.LogInformation($"Query: {query}");
+            //_logger.LogInformation($"Command Type: {commandType}");
+            //_logger.LogInformation($"Has Params: {@params is not null}");
+            if (transaction is null)
+            {
+                using (System.Data.IDbConnection con = new OracleConnection(_configuration.ConnectionString))
+                {
+                    //_logger.LogInformation("Established Db Connection");
+                    result = _tryCatch.Try(() =>
+                    {
+                        List<dynamic> result = new();
+                        using (var lists = con.QueryMultiple(sql: query, commandType: commandType, commandTimeout: _configuration.ConnectionTimeout, param: (oracleParameters is null ? @params : oracleParameters)))
+                        {
+                            for (int i = 0; i < resultsCount; i++)
+                            {
+                                result.Add(lists.Read<dynamic>());
+                            }
+                        }
+                        return result;
+                    }, out isSuccessfull, true);
+                    //_logger.LogInformation($"Result Count: {result?.Count}");
+                }
+            }
+            else
+            {
+                result = _tryCatch.Try(() =>
+                {
+                    List<dynamic> result = new();
+                    using (var lists = transaction.Connection.QueryMultiple(sql: query, commandType: commandType, commandTimeout: _configuration.ConnectionTimeout, param: (oracleParameters is null ? @params : oracleParameters), transaction: transaction))
+                    {
+                        for (int i = 0; i < resultsCount; i++)
+                        {
+                            result.Add(lists.Read<dynamic>());
+                        }
+                    }
+                    return result;
+                }, out isSuccessfull, true);
+            }
+            isDataFound = result is not null && isSuccessfull;
+            //_logger.LogInformation($"Data Found: {isDataFound}");
+            return result;
+        }
         /// <summary>
         /// Returns the first row of the data extracted from the db
         /// </summary>
@@ -520,11 +567,12 @@ namespace Dapper.OData.Infrastructure.Oracle
         /// <param name="query">The command which fetches the data</param>
         /// <param name="commandType">Type of the command</param>
         /// <param name="map">object mapping anonymous function</param>
+        /// <param name="split"></param>
         /// <param name="isDataFound">Out flag which indicates the presence of data</param>
         /// <param name="params">parameters of a query</param>
-        /// <param name="transaction"></param>
         /// <returns></returns>
-        public T GetSingleResult<T, U>(string query, CommandType commandType, Func<T, U, T> map, out bool isDataFound, object @params = null, IDbTransaction transaction = null)
+        /// <param name="transaction"></param>
+        public T GetSingleResult<T, U>(string query, CommandType commandType, Func<T, U, T> map, string split, out bool isDataFound, object @params = null, IDbTransaction transaction = null)
         {
             T result;
             OracleDynamicParameters oracleParameters = GetOracleParameters(@params, commandType);
@@ -538,7 +586,7 @@ namespace Dapper.OData.Infrastructure.Oracle
                     //_logger.LogInformation("Established Db Connection");
                     result = _tryCatch.Try(() =>
                     {
-                        return con.Query(sql: query, commandType: commandType, commandTimeout: _configuration.ConnectionTimeout, param: (oracleParameters is null ? @params : oracleParameters), map: map).Single();
+                        return con.Query(sql: query, commandType: commandType, commandTimeout: _configuration.ConnectionTimeout, param: (oracleParameters is null ? @params : oracleParameters), map: map, splitOn: split).Single();
                     }, out bool isSuccessfull, true);
                 }
             }
@@ -546,7 +594,49 @@ namespace Dapper.OData.Infrastructure.Oracle
             {
                 result = _tryCatch.Try(() =>
                 {
-                    return transaction.Connection.Query(sql: query, commandType: commandType, commandTimeout: _configuration.ConnectionTimeout, param: (oracleParameters is null ? @params : oracleParameters), transaction: transaction, map: map).Single();
+                    return transaction.Connection.Query(sql: query, commandType: commandType, commandTimeout: _configuration.ConnectionTimeout, param: (oracleParameters is null ? @params : oracleParameters), transaction: transaction, map: map, splitOn: split).Single();
+                }, out bool isSuccessfull, true);
+            }
+            isDataFound = (result != null);
+            //_logger.LogInformation($"Data Found: {isDataFound}");
+            return result;
+        }
+        /// <summary>
+        /// Returns the first row of the data extracted from the db (Multi object mapper)
+        /// </summary>
+        /// <typeparam name="T">Any Model Matching the query result</typeparam>
+        /// <typeparam name="U">Sub-model</typeparam>
+        /// <param name="query">The command which fetches the data</param>
+        /// <param name="commandType">Type of the command</param>
+        /// <param name="map">object mapping anonymous function</param>
+        /// <param name="split"></param>
+        /// <param name="isDataFound">Out flag which indicates the presence of data</param>
+        /// <param name="params">parameters of a query</param>
+        /// <returns></returns>
+        /// <param name="transaction"></param>
+        public T GetSingleResult<T, U, V>(string query, CommandType commandType, Func<T, U, V, T> map, string split, out bool isDataFound, object @params = null, IDbTransaction transaction = null)
+        {
+            T result;
+            OracleDynamicParameters oracleParameters = GetOracleParameters(@params, commandType);
+            //_logger.LogInformation($"Query: {query}");
+            //_logger.LogInformation($"Command Type: {commandType}");
+            //_logger.LogInformation($"Has Params: {@params is not null}");
+            if (transaction is null)
+            {
+                using (System.Data.IDbConnection con = new OracleConnection(_configuration.ConnectionString))
+                {
+                    //_logger.LogInformation("Established Db Connection");
+                    result = _tryCatch.Try(() =>
+                    {
+                        return con.Query(sql: query, commandType: commandType, commandTimeout: _configuration.ConnectionTimeout, param: (oracleParameters is null ? @params : oracleParameters), map: map, splitOn: split).Single();
+                    }, out bool isSuccessfull, true);
+                }
+            }
+            else
+            {
+                result = _tryCatch.Try(() =>
+                {
+                    return transaction.Connection.Query(sql: query, commandType: commandType, commandTimeout: _configuration.ConnectionTimeout, param: (oracleParameters is null ? @params : oracleParameters), transaction: transaction, map: map, splitOn: split).Single();
                 }, out bool isSuccessfull, true);
             }
             isDataFound = (result != null);

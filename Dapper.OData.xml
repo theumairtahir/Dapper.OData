@@ -4,6 +4,13 @@
         <name>Dapper.OData</name>
     </assembly>
     <members>
+        <member name="M:Dapper.OData.Extensions.Extensions.GetOutParamsDictionary(Dapper.Oracle.OracleDynamicParameters)">
+            <summary>
+            Returns a list of output parameters with their values after successfull execution of the oracle procedure
+            </summary>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
         <member name="T:Dapper.OData.Infrastructure.DbConnection">
             <summary>
             Handles the Db connections and commands
@@ -192,7 +199,7 @@
             <param name="transaction"></param>
             <returns></returns>
         </member>
-        <member name="M:Dapper.OData.Infrastructure.DbConnection.GetSingleResult``2(System.String,System.Data.CommandType,System.Func{``0,``1,``0},System.Boolean@,System.Object,System.Data.IDbTransaction)">
+        <member name="M:Dapper.OData.Infrastructure.DbConnection.GetSingleResult``2(System.String,System.Data.CommandType,System.Func{``0,``1,``0},System.String,System.Boolean@,System.Object,System.Data.IDbTransaction)">
             <summary>
             Returns the first row of the data extracted from the db (Multi object mapper)
             </summary>
@@ -201,10 +208,26 @@
             <param name="query">The command which fetches the data</param>
             <param name="commandType">Type of the command</param>
             <param name="map">object mapping anonymous function</param>
+            <param name="split"></param>
             <param name="isDataFound">Out flag which indicates the presence of data</param>
             <param name="params">parameters of a query</param>
-            <param name="transaction"></param>
             <returns></returns>
+            <param name="transaction"></param>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.DbConnection.GetSingleResult``3(System.String,System.Data.CommandType,System.Func{``0,``1,``2,``0},System.String,System.Boolean@,System.Object,System.Data.IDbTransaction)">
+            <summary>
+            Returns the first row of the data extracted from the db (Multi object mapper)
+            </summary>
+            <typeparam name="T">Any Model Matching the query result</typeparam>
+            <typeparam name="U">Sub-model</typeparam>
+            <param name="query">The command which fetches the data</param>
+            <param name="commandType">Type of the command</param>
+            <param name="map">object mapping anonymous function</param>
+            <param name="split"></param>
+            <param name="isDataFound">Out flag which indicates the presence of data</param>
+            <param name="params">parameters of a query</param>
+            <returns></returns>
+            <param name="transaction"></param>
         </member>
         <member name="M:Dapper.OData.Infrastructure.DbConnection.GetScalerResult``1(System.String,System.Data.CommandType,System.Boolean@,System.Object,System.Data.IDbTransaction)">
             <summary>
@@ -233,6 +256,18 @@
             <summary>
             Runs a set on commands in a transaction
             </summary>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.DbConnection.GetMultiResults(System.String,System.Int32,System.Data.CommandType,System.Boolean@,System.Object,System.Data.IDbTransaction)">
+            <summary>
+            Returns multiple results
+            </summary>
+            <param name="query">The command which fetches the data</param>
+            <param name="resultsCount">Number of list results</param>
+            <param name="commandType">Type of the command</param>
+            <param name="isDataFound">Out flag which indicates the presence of data</param>
+            <param name="params">Parameters of a query</param>
             <param name="transaction"></param>
             <returns></returns>
         </member>
@@ -281,6 +316,18 @@
             <param name="map">object mapping anonymous function</param>
             <param name="isDataFound">Out flag which indicates the presence of data</param>
             <param name="params">parameters of a query</param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.IDbConnection.GetMultiResults(System.String,System.Int32,System.Data.CommandType,System.Boolean@,System.Object,System.Data.IDbTransaction)">
+            <summary>
+            Returns multiple results
+            </summary>
+            <param name="query">The command which fetches the data</param>
+            <param name="resultsCount">Number of list results to be returned</param>
+            <param name="commandType">Type of the command</param>
+            <param name="isDataFound">Out flag which indicates the presence of data</param>
+            <param name="params">Parameters of a query</param>
             <param name="transaction"></param>
             <returns></returns>
         </member>
@@ -452,7 +499,7 @@
             <param name="transaction"></param>
             <returns></returns>
         </member>
-        <member name="M:Dapper.OData.Infrastructure.IDbConnection.GetSingleResult``2(System.String,System.Data.CommandType,System.Func{``0,``1,``0},System.Boolean@,System.Object,System.Data.IDbTransaction)">
+        <member name="M:Dapper.OData.Infrastructure.IDbConnection.GetSingleResult``2(System.String,System.Data.CommandType,System.Func{``0,``1,``0},System.String,System.Boolean@,System.Object,System.Data.IDbTransaction)">
             <summary>
             Returns the first row of the data extracted from the db (Multi object mapper)
             </summary>
@@ -461,10 +508,26 @@
             <param name="query">The command which fetches the data</param>
             <param name="commandType">Type of the command</param>
             <param name="map">object mapping anonymous function</param>
+            <param name="split"></param>
             <param name="isDataFound">Out flag which indicates the presence of data</param>
             <param name="params">parameters of a query</param>
-            <param name="transaction"></param>
             <returns></returns>
+            <param name="transaction"></param>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.IDbConnection.GetSingleResult``3(System.String,System.Data.CommandType,System.Func{``0,``1,``2,``0},System.String,System.Boolean@,System.Object,System.Data.IDbTransaction)">
+            <summary>
+            Returns the first row of the data extracted from the db (Multi object mapper)
+            </summary>
+            <typeparam name="T">Any Model Matching the query result</typeparam>
+            <typeparam name="U">Sub-model</typeparam>
+            <param name="query">The command which fetches the data</param>
+            <param name="commandType">Type of the command</param>
+            <param name="map">object mapping anonymous function</param>
+            <param name="split"></param>
+            <param name="isDataFound">Out flag which indicates the presence of data</param>
+            <param name="params">parameters of a query</param>
+            <returns></returns>
+            <param name="transaction"></param>
         </member>
         <member name="T:Dapper.OData.Infrastructure.Oracle.DbConnection">
             <summary>
@@ -654,7 +717,7 @@
             <param name="transaction"></param>
             <returns></returns>
         </member>
-        <member name="M:Dapper.OData.Infrastructure.Oracle.DbConnection.GetSingleResult``2(System.String,System.Data.CommandType,System.Func{``0,``1,``0},System.Boolean@,System.Object,System.Data.IDbTransaction)">
+        <member name="M:Dapper.OData.Infrastructure.Oracle.DbConnection.GetSingleResult``2(System.String,System.Data.CommandType,System.Func{``0,``1,``0},System.String,System.Boolean@,System.Object,System.Data.IDbTransaction)">
             <summary>
             Returns the first row of the data extracted from the db (Multi object mapper)
             </summary>
@@ -663,10 +726,26 @@
             <param name="query">The command which fetches the data</param>
             <param name="commandType">Type of the command</param>
             <param name="map">object mapping anonymous function</param>
+            <param name="split"></param>
             <param name="isDataFound">Out flag which indicates the presence of data</param>
             <param name="params">parameters of a query</param>
-            <param name="transaction"></param>
             <returns></returns>
+            <param name="transaction"></param>
+        </member>
+        <member name="M:Dapper.OData.Infrastructure.Oracle.DbConnection.GetSingleResult``3(System.String,System.Data.CommandType,System.Func{``0,``1,``2,``0},System.String,System.Boolean@,System.Object,System.Data.IDbTransaction)">
+            <summary>
+            Returns the first row of the data extracted from the db (Multi object mapper)
+            </summary>
+            <typeparam name="T">Any Model Matching the query result</typeparam>
+            <typeparam name="U">Sub-model</typeparam>
+            <param name="query">The command which fetches the data</param>
+            <param name="commandType">Type of the command</param>
+            <param name="map">object mapping anonymous function</param>
+            <param name="split"></param>
+            <param name="isDataFound">Out flag which indicates the presence of data</param>
+            <param name="params">parameters of a query</param>
+            <returns></returns>
+            <param name="transaction"></param>
         </member>
         <member name="M:Dapper.OData.Infrastructure.Oracle.DbConnection.GetScalerResult``1(System.String,System.Data.CommandType,System.Boolean@,System.Object,System.Data.IDbTransaction)">
             <summary>

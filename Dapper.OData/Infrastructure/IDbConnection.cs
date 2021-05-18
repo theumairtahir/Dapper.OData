@@ -50,6 +50,18 @@ namespace Dapper.OData.Infrastructure
         /// <returns></returns>
         List<T> GetListResult<T, U>(string query, CommandType commandType, Func<T, U, T> map, out bool isDataFound, object @params = null, IDbTransaction transaction = null);
         /// <summary>
+        /// Returns multiple results
+        /// </summary>
+        /// <param name="query">The command which fetches the data</param>
+        /// <param name="resultsCount">Number of list results to be returned</param>
+        /// <param name="commandType">Type of the command</param>
+        /// <param name="isDataFound">Out flag which indicates the presence of data</param>
+        /// <param name="params">Parameters of a query</param>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
+        public List<dynamic> GetMultiResults(string query, int resultsCount, CommandType commandType, out bool isDataFound, object @params = null, IDbTransaction transaction = null);
+
+        /// <summary>
         /// This action will return those rows which will be fetched by the OData Endpoint
         /// </summary>
         /// <typeparam name="T">Type Result Model</typeparam>
@@ -217,10 +229,25 @@ namespace Dapper.OData.Infrastructure
         /// <param name="query">The command which fetches the data</param>
         /// <param name="commandType">Type of the command</param>
         /// <param name="map">object mapping anonymous function</param>
+        /// <param name="split"></param>
         /// <param name="isDataFound">Out flag which indicates the presence of data</param>
         /// <param name="params">parameters of a query</param>
-        /// <param name="transaction"></param>
         /// <returns></returns>
-        T GetSingleResult<T, U>(string query, CommandType commandType, Func<T, U, T> map, out bool isDataFound, object @params = null, IDbTransaction transaction = null);
+        /// <param name="transaction"></param>
+        T GetSingleResult<T, U>(string query, CommandType commandType, Func<T, U, T> map, string split, out bool isDataFound, object @params = null, IDbTransaction transaction = null);
+        /// <summary>
+        /// Returns the first row of the data extracted from the db (Multi object mapper)
+        /// </summary>
+        /// <typeparam name="T">Any Model Matching the query result</typeparam>
+        /// <typeparam name="U">Sub-model</typeparam>
+        /// <param name="query">The command which fetches the data</param>
+        /// <param name="commandType">Type of the command</param>
+        /// <param name="map">object mapping anonymous function</param>
+        /// <param name="split"></param>
+        /// <param name="isDataFound">Out flag which indicates the presence of data</param>
+        /// <param name="params">parameters of a query</param>
+        /// <returns></returns>
+        /// <param name="transaction"></param>
+        T GetSingleResult<T, U, V>(string query, CommandType commandType, Func<T, U, V, T> map, string split, out bool isDataFound, object @params = null, IDbTransaction transaction = null);
     }
 }
