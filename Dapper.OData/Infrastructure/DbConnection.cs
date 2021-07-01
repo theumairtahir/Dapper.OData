@@ -109,7 +109,7 @@ namespace Dapper.OData.Infrastructure
                     return con.Query<T>(sql: formattedQuery, commandType: CommandType.Text, commandTimeout: _configuration.ConnectionTimeout, param: @params, transaction: transaction).AsQueryable();
                 }, out bool isSuccessFull, true);
             }
-            isDataFound = (result != null || result.Any());
+            isDataFound = (result != null && result.Any());
             return result;
         }
         /// <summary>
@@ -170,7 +170,7 @@ namespace Dapper.OData.Infrastructure
                     return con.Query(sql: formattedQuery, commandType: CommandType.Text, commandTimeout: _configuration.ConnectionTimeout, param: @params, transaction: transaction, map: map, splitOn: splitOn).AsQueryable();
                 }, out bool isSuccessFull, true);
             }
-            isDataFound = (result != null || result.Any());
+            isDataFound = (result != null && result.Any());
             return result;
         }
         /// <summary>
@@ -232,7 +232,7 @@ namespace Dapper.OData.Infrastructure
                     return con.Query(sql: formattedQuery, commandType: CommandType.Text, commandTimeout: _configuration.ConnectionTimeout, param: @params, transaction: transaction, map: map, splitOn: splitOn).AsQueryable();
                 }, out bool isSuccessFull, true);
             }
-            isDataFound = (result != null || result.Any());
+            isDataFound = (result != null && result.Any());
             return result;
         }
         /// <summary>
@@ -295,7 +295,7 @@ namespace Dapper.OData.Infrastructure
                     return con.Query(sql: formattedQuery, commandType: CommandType.Text, commandTimeout: _configuration.ConnectionTimeout, param: @params, transaction: transaction, map: map).AsQueryable();
                 }, out bool isSuccessFull, true);
             }
-            isDataFound = (result != null || result.Any());
+            isDataFound = (result != null && result.Any());
             return result;
         }
         /// <summary>
@@ -359,7 +359,7 @@ namespace Dapper.OData.Infrastructure
                     return con.Query(sql: formattedQuery, commandType: CommandType.Text, commandTimeout: _configuration.ConnectionTimeout, param: @params, transaction: transaction, map: map).AsQueryable();
                 }, out bool isSuccessFull, true);
             }
-            isDataFound = (result != null || result.Any());
+            isDataFound = (result != null && result.Any());
             return result;
         }
         /// <summary>
@@ -424,7 +424,7 @@ namespace Dapper.OData.Infrastructure
                     return con.Query(sql: formattedQuery, commandType: CommandType.Text, commandTimeout: _configuration.ConnectionTimeout, param: @params, transaction: transaction, map: map).AsQueryable();
                 }, out bool isSuccessFull, true);
             }
-            isDataFound = (result != null || result.Any());
+            isDataFound = (result != null && result.Any());
             return result;
         }
         /// <summary>
@@ -490,7 +490,7 @@ namespace Dapper.OData.Infrastructure
                     return con.Query(sql: formattedQuery, commandType: CommandType.Text, commandTimeout: _configuration.ConnectionTimeout, param: @params, transaction: transaction, map: map).AsQueryable();
                 }, out bool isSuccessFull, true);
             }
-            isDataFound = (result != null || result.Any());
+            isDataFound = (result != null && result.Any());
             return result;
         }
         private string GetWhereClause(string filter)
