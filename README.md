@@ -105,3 +105,6 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ## License
 [MIT](LICENSE)
+
+## New in this Release
+Added Support for Oracle Database with some new mwthods for multi query result.
