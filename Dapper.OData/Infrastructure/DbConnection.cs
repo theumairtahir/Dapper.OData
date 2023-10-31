@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
 
 namespace Dapper.OData.Infrastructure
 {
@@ -41,13 +42,10 @@ namespace Dapper.OData.Infrastructure
             //_logger.LogInformation($"Query: {query}");
             //_logger.LogInformation($"Command Type: {commandType}");
             //_logger.LogInformation($"Has Params: {@params is not null}");
-            using (System.Data.IDbConnection con = new SqlConnection(_configuration.ConnectionString))
+            using (var con = new SqlConnection(_configuration.ConnectionString))
             {
                 //_logger.LogInformation("Established Db Connection");
-                result = _tryCatch.Try(() =>
-                {
-                    return con.Query<T>(sql: query, commandType: commandType, commandTimeout: _configuration.ConnectionTimeout, param: @params, transaction: transaction).ToList();
-                }, out bool isSuccessfull, true);
+                result = _tryCatch.Try(() => con.Query<T>(sql: query, commandType: commandType, commandTimeout: _configuration.ConnectionTimeout, param: @params, transaction: transaction).ToList(), out bool isSuccessful, true);
                 //_logger.LogInformation($"Result Count: {result?.Count}");
             }
             isDataFound = (result != null || result.Count > 0);
