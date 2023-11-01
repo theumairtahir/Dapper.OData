@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
 
 namespace Dapper.OData.Infrastructure
 {
@@ -41,13 +42,10 @@ namespace Dapper.OData.Infrastructure
             //_logger.LogInformation($"Query: {query}");
             //_logger.LogInformation($"Command Type: {commandType}");
             //_logger.LogInformation($"Has Params: {@params is not null}");
-            using (System.Data.IDbConnection con = new SqlConnection(_configuration.ConnectionString))
+            using (var con = new SqlConnection(_configuration.ConnectionString))
             {
                 //_logger.LogInformation("Established Db Connection");
-                result = _tryCatch.Try(() =>
-                {
-                    return con.Query<T>(sql: query, commandType: commandType, commandTimeout: _configuration.ConnectionTimeout, param: @params, transaction: transaction).ToList();
-                }, out bool isSuccessfull, true);
+                result = _tryCatch.Try(() => con.Query<T>(sql: query, commandType: commandType, commandTimeout: _configuration.CommandTimeout, param: @params, transaction: transaction).ToList(), out bool isSuccessful, true);
                 //_logger.LogInformation($"Result Count: {result?.Count}");
             }
             isDataFound = (result != null || result.Count > 0);
@@ -106,7 +104,7 @@ namespace Dapper.OData.Infrastructure
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
                 {
-                    return con.Query<T>(sql: formattedQuery, commandType: CommandType.Text, commandTimeout: _configuration.ConnectionTimeout, param: @params, transaction: transaction).AsQueryable();
+                    return con.Query<T>(sql: formattedQuery, commandType: CommandType.Text, commandTimeout: _configuration.CommandTimeout, param: @params, transaction: transaction).AsQueryable();
                 }, out bool isSuccessFull, true);
             }
             isDataFound = (result != null && result.Any());
@@ -167,7 +165,7 @@ namespace Dapper.OData.Infrastructure
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
                 {
-                    return con.Query(sql: formattedQuery, commandType: CommandType.Text, commandTimeout: _configuration.ConnectionTimeout, param: @params, transaction: transaction, map: map, splitOn: splitOn).AsQueryable();
+                    return con.Query(sql: formattedQuery, commandType: CommandType.Text, commandTimeout: _configuration.CommandTimeout, param: @params, transaction: transaction, map: map, splitOn: splitOn).AsQueryable();
                 }, out bool isSuccessFull, true);
             }
             isDataFound = (result != null && result.Any());
@@ -229,7 +227,7 @@ namespace Dapper.OData.Infrastructure
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
                 {
-                    return con.Query(sql: formattedQuery, commandType: CommandType.Text, commandTimeout: _configuration.ConnectionTimeout, param: @params, transaction: transaction, map: map, splitOn: splitOn).AsQueryable();
+                    return con.Query(sql: formattedQuery, commandType: CommandType.Text, commandTimeout: _configuration.CommandTimeout, param: @params, transaction: transaction, map: map, splitOn: splitOn).AsQueryable();
                 }, out bool isSuccessFull, true);
             }
             isDataFound = (result != null && result.Any());
@@ -292,7 +290,7 @@ namespace Dapper.OData.Infrastructure
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
                 {
-                    return con.Query(sql: formattedQuery, commandType: CommandType.Text, commandTimeout: _configuration.ConnectionTimeout, param: @params, transaction: transaction, map: map).AsQueryable();
+                    return con.Query(sql: formattedQuery, commandType: CommandType.Text, commandTimeout: _configuration.CommandTimeout, param: @params, transaction: transaction, map: map).AsQueryable();
                 }, out bool isSuccessFull, true);
             }
             isDataFound = (result != null && result.Any());
@@ -356,7 +354,7 @@ namespace Dapper.OData.Infrastructure
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
                 {
-                    return con.Query(sql: formattedQuery, commandType: CommandType.Text, commandTimeout: _configuration.ConnectionTimeout, param: @params, transaction: transaction, map: map).AsQueryable();
+                    return con.Query(sql: formattedQuery, commandType: CommandType.Text, commandTimeout: _configuration.CommandTimeout, param: @params, transaction: transaction, map: map).AsQueryable();
                 }, out bool isSuccessFull, true);
             }
             isDataFound = (result != null && result.Any());
@@ -421,7 +419,7 @@ namespace Dapper.OData.Infrastructure
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
                 {
-                    return con.Query(sql: formattedQuery, commandType: CommandType.Text, commandTimeout: _configuration.ConnectionTimeout, param: @params, transaction: transaction, map: map).AsQueryable();
+                    return con.Query(sql: formattedQuery, commandType: CommandType.Text, commandTimeout: _configuration.CommandTimeout, param: @params, transaction: transaction, map: map).AsQueryable();
                 }, out bool isSuccessFull, true);
             }
             isDataFound = (result != null && result.Any());
@@ -487,7 +485,7 @@ namespace Dapper.OData.Infrastructure
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
                 {
-                    return con.Query(sql: formattedQuery, commandType: CommandType.Text, commandTimeout: _configuration.ConnectionTimeout, param: @params, transaction: transaction, map: map).AsQueryable();
+                    return con.Query(sql: formattedQuery, commandType: CommandType.Text, commandTimeout: _configuration.CommandTimeout, param: @params, transaction: transaction, map: map).AsQueryable();
                 }, out bool isSuccessFull, true);
             }
             isDataFound = (result != null && result.Any());
@@ -537,7 +535,7 @@ namespace Dapper.OData.Infrastructure
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
                 {
-                    return con.Query(sql: query, commandType: commandType, commandTimeout: _configuration.ConnectionTimeout, param: @params, transaction: transaction, map: map).ToList();
+                    return con.Query(sql: query, commandType: commandType, commandTimeout: _configuration.CommandTimeout, param: @params, transaction: transaction, map: map).ToList();
                 }, out bool isSuccessfull, true);
                 //_logger.LogInformation($"Result Count: {result?.Count}");
             }
@@ -566,7 +564,7 @@ namespace Dapper.OData.Infrastructure
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
                 {
-                    return con.Query<T>(sql: query, commandType: commandType, commandTimeout: _configuration.ConnectionTimeout, param: @params, transaction: transaction).First();
+                    return con.Query<T>(sql: query, commandType: commandType, commandTimeout: _configuration.CommandTimeout, param: @params, transaction: transaction).First();
                 }, out bool isSuccessfull, true);
             }
             isDataFound = (result != null);
@@ -597,7 +595,7 @@ namespace Dapper.OData.Infrastructure
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
                 {
-                    return con.Query(sql: query, commandType: commandType, commandTimeout: _configuration.ConnectionTimeout, param: @params, transaction: transaction, map: map, splitOn: split).Single();
+                    return con.Query(sql: query, commandType: commandType, commandTimeout: _configuration.CommandTimeout, param: @params, transaction: transaction, map: map, splitOn: split).Single();
                 }, out bool isSuccessfull, true);
             }
             isDataFound = (result != null);
@@ -628,7 +626,7 @@ namespace Dapper.OData.Infrastructure
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
                 {
-                    return con.Query(sql: query, commandType: commandType, commandTimeout: _configuration.ConnectionTimeout, param: @params, transaction: transaction, map: map, splitOn: split).Single();
+                    return con.Query(sql: query, commandType: commandType, commandTimeout: _configuration.CommandTimeout, param: @params, transaction: transaction, map: map, splitOn: split).Single();
                 }, out bool isSuccessfull, true);
             }
             isDataFound = (result != null);
@@ -656,7 +654,7 @@ namespace Dapper.OData.Infrastructure
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
                 {
-                    return (T)con.ExecuteScalar(sql: query, commandType: commandType, commandTimeout: _configuration.ConnectionTimeout, param: @params, transaction: transaction);
+                    return (T)con.ExecuteScalar(sql: query, commandType: commandType, commandTimeout: _configuration.CommandTimeout, param: @params, transaction: transaction);
                 }, out bool isSuccessfull, true);
             }
             isDataFound = (result != null);
@@ -683,7 +681,7 @@ namespace Dapper.OData.Infrastructure
                 //_logger.LogInformation("Established Db Connection");
                 result = _tryCatch.Try(() =>
                 {
-                    return con.Execute(query, param: @params, commandTimeout: _configuration.ConnectionTimeout, commandType: commandType, transaction: transaction);
+                    return con.Execute(query, param: @params, commandTimeout: _configuration.CommandTimeout, commandType: commandType, transaction: transaction);
                 }, out isSuccessfull, true);
             }
             isSuccessfull = isSuccessfull ? (result > 0) : isSuccessfull;
@@ -744,7 +742,7 @@ namespace Dapper.OData.Infrastructure
                 result = _tryCatch.Try(() =>
                 {
                     List<dynamic> result = new();
-                    using (var lists = con.QueryMultiple(sql: query, commandType: commandType, commandTimeout: _configuration.ConnectionTimeout, param: @params, transaction: transaction))
+                    using (var lists = con.QueryMultiple(sql: query, commandType: commandType, commandTimeout: _configuration.CommandTimeout, param: @params, transaction: transaction))
                     {
                         for (int i = 0; i < resultsCount; i++)
                         {
